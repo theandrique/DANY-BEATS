@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANY BEATS</title>
+    <link rel="icon" type="image" href="image/téléchargement.jpeg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff0080;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff0080;
+        }
+
+        /* Hero Section avec Vidéo */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,0,128,0.5);
+        }
+
+        .hero .tagline {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-button {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .hero-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3em;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Beats Section */
+        .beat-item {
+            background: linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1));
+            border: 1px solid rgba(255,0,128,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .beat-item:hover {
+            background: linear-gradient(135deg, rgba(255,0,128,0.2), rgba(255,140,0,0.2));
+            transform: translateX(10px);
+            border-color: #ff0080;
+        }
+
+        .beat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .beat-info {
+            flex-grow: 1;
+        }
+
+        .beat-title {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .beat-genre {
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+            height: 40px;
+        }
+
+        /* Videos Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            background: linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1));
+            border: 1px solid rgba(255,0,128,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff0080;
+        }
+
+        .video-card h3 {
+            margin-bottom: 15px;
+            color: #ff0080;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About Section */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-button {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,0,128,0.1);
+            border-top: 2px solid #ff0080;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff0080;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        
+    /* Popup YouTube */
+.youtube-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.youtube-popup.show {
+    display: flex;
+    animation: fadeIn 0.5s;
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+    border: 3px solid #ff0080;
+    animation: slideUp 0.5s;
+}
+
+.popup-content h2 {
+    color: #ff0080;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.popup-content p {
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.popup-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.popup-btn.subscribe {
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    color: white;
+}
+
+.popup-btn.later {
+    background: transparent;
+    border: 2px solid #ff0080;
+    color: #ff0080;
+}
+
+.popup-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Like Button */
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-btn {
+    background: rgba(255,0,128,0.2);
+    border: 2px solid #ff0080;
+    color: #ff0080;
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-btn:hover {
+    background: #ff0080;
+    color: white;
+    transform: scale(1.05);
+}
+
+.like-btn.liked {
+    background: #ff0080;
+    color: white;
+}
+
+.like-count {
+    font-size: 0.9em;
+}
+
+/* Playing Indicator */
+.beat-item.playing {
+    background: linear-gradient(135deg, rgba(255,0,128,0.3), rgba(255,140,0,0.3));
+    border-color: #ff0080;
+    box-shadow: 0 0 20px rgba(255,0,128,0.4);
+}
+
+.beat-item.playing .beat-icon {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3em;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,0.95);
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .beat-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- YouTube Popup -->
+<div id="youtubePopup" class="youtube-popup">
+    <div class="popup-content">
+        <h2>🎵 Sipòte DANY BEATS! 🎵</h2>
+        <p>Abòne w sou YouTube pou jwenn tout nouvo beats yo, tutorials, epi behind the scenes!</p>
+        <p><strong>Se gratis epi li ede anpil! 🙏</strong></p>
+        <div class="popup-buttons">
+            <button class="popup-btn subscribe" onclick="subscribeYoutube()">
+                📺 Abòne Kounye a!
+            </button>
+            <button class="popup-btn later" onclick="closePopup()">
+                ⏰ Pita
+            </button>
+        </div>
+    </div>
+</div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🎵 DANY BEATS</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#beats">Beats</a></li>
+                <li><a href="#videos">Vidéos</a></li>
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section avec Vidéo -->
+    <section id="home" class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="https://www.pexels.com/download/video/8198262/" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>DANY BEATS</h1>
+            <p class="tagline">Productions Originales • Qualité Professionnelle</p>
+            <a href="#beats" class="hero-button">Découvrir Mes Beats</a>
+        </div>
+    </section>
+
+    <!-- Beats Section -->
+    <section id="beats">
+        <h2 class="section-title">🔥 Mes Beats</h2>
+        
+        <div class="beat-item">
+            <div class="beat-icon">🎹</div>
+            <div class="beat-info">
+                <div class="beat-title">SUNSET</div>
+                <div class="beat-genre">ARO-POP • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/1.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="beat-item">
+            <div class="beat-icon">🎧</div>
+            <div class="beat-info">
+                <div class="beat-title">FATHER</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/2.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="beat-item">
+            <div class="beat-icon">🎤</div>
+            <div class="beat-info">
+                <div class="beat-title">NO ONE</div>
+                <div class="beat-genre">AFRO BEAT • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/3.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="beat-item">
+            <div class="beat-icon">💋</div>
+            <div class="beat-info">
+                <div class="beat-title">TRANQUILLE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/4.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+         <div class="beat-item">
+            <div class="beat-icon">💎</div>
+            <div class="beat-info">
+                <div class="beat-title">LOVE STORY</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/5.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+         <div class="beat-item">
+            <div class="beat-icon">🎀</div>
+            <div class="beat-info">
+                <div class="beat-title">MA ROSE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/6.mpeg" type="audio/mpeg">
+            </audio> 
+        </div>
+              <div class="beat-item">
+            <div class="beat-icon">🎃</div>
+            <div class="beat-info">
+                <div class="beat-title">DIEU EST GRAND</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/7.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+              <div class="beat-item">
+            <div class="beat-icon">👑</div>
+            <div class="beat-info">
+                <div class="beat-title">HAITIENNE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/8.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎈</div>
+            <div class="beat-info">
+                <div class="beat-title">SHORT</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/9.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎁</div>
+            <div class="beat-info">
+                <div class="beat-title">WILL I ARRIVE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/10.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎗</div>
+            <div class="beat-info">
+                <div class="beat-title">BEAUTY</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/11.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎭</div>
+            <div class="beat-info">
+                <div class="beat-title">ALWAYS</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/12.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎏</div>
+            <div class="beat-info">
+                <div class="beat-title">DANY</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/13.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🥽</div>
+            <div class="beat-info">
+                <div class="beat-title">ECOLIER</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/14.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🥼</div>
+            <div class="beat-info">
+                <div class="beat-title">HERITIER</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/15.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎄</div>
+            <div class="beat-info">
+                <div class="beat-title">NICA</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/16.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">👖</div>
+            <div class="beat-info">
+                <div class="beat-title">BLACK BOY</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/17.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="beat-item">
+            <div class="beat-icon">💗</div>
+            <div class="beat-info">
+                <div class="beat-title">AYOOO</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/19.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">☮</div>
+            <div class="beat-info">
+                <div class="beat-title">FEELING</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="musiC/20.ogg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎅</div>
+            <div class="beat-info">
+                <div class="beat-title">GREAT</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/21.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">👸</div>
+            <div class="beat-info">
+                <div class="beat-title">CHILD</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/22.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">😎</div>
+            <div class="beat-info">
+                <div class="beat-title">NAVAROO</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/23.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="beat-item">
+            <div class="beat-icon">🥰</div>
+            <div class="beat-info">
+                <div class="beat-title">I'M SORRY</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/25.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🤐</div>
+            <div class="beat-info">
+                <div class="beat-title">SILENCE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/26.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">👑</div>
+            <div class="beat-info">
+                <div class="beat-title">PARIS</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/27.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">👩</div>
+            <div class="beat-info">
+                <div class="beat-title">VANESSA</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/28.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">💟</div>
+            <div class="beat-info">
+                <div class="beat-title">FORGIVE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/29.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">💖</div>
+            <div class="beat-info">
+                <div class="beat-title">LOVE STORY</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/30.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">💿</div>
+            <div class="beat-info">
+                <div class="beat-title">TO NIGHT</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/31.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+                  </div>
+               <div class="beat-item">
+            <div class="beat-icon">✨</div>
+            <div class="beat-info">
+                <div class="beat-title">SOURRIRE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/33.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎭</div>
+            <div class="beat-info">
+                <div class="beat-title">PASSION 2</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/34.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">🎨</div>
+            <div class="beat-info">
+                <div class="beat-title">DOUCEUR</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/35.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+        </div>
+               <div class="beat-item">
+            <div class="beat-icon">💔</div>
+            <div class="beat-info">
+                <div class="beat-title">BROCKEN</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/37.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👰</div>
+            <div class="beat-info">
+                <div class="beat-title">MAMAN</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/38.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😏</div>
+            <div class="beat-info">
+                <div class="beat-title">ALPHIE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/39.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😪</div>
+            <div class="beat-info">
+                <div class="beat-title">MOONLIGHT</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/40.ogg" type="audio/ogg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🥱</div>
+            <div class="beat-info">
+                <div class="beat-title">MELISSA</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/41.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🎞</div>
+            <div class="beat-info">
+                <div class="beat-title">TASTE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/43.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="beat-item">
+            <div class="beat-icon">🥎</div>
+            <div class="beat-info">
+                <div class="beat-title">LAST DANCE</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/45.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👢</div>
+            <div class="beat-info">
+                <div class="beat-title">JOY</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/46.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🍚</div>
+            <div class="beat-info">
+                <div class="beat-title">PLEASE</div>
+                <div class="beat-genre">DRIL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/47.ogg" type="audio/ogg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🍗</div>
+            <div class="beat-info">
+                <div class="beat-title">AMANDA</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/48.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">💖</div>
+            <div class="beat-info">
+                <div class="beat-title">SOURRIRE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/49.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">💌</div>
+            <div class="beat-info">
+                <div class="beat-title">MANIOK</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/50.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">💛</div>
+            <div class="beat-info">
+                <div class="beat-title">HEART BREAK</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/51.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">💢</div>
+            <div class="beat-info">
+                <div class="beat-title">CAELLE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/52.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🤡</div>
+            <div class="beat-info">
+                <div class="beat-title">ANTIDOTE</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/53.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😥</div>
+            <div class="beat-info">
+                <div class="beat-title">SOLITUDE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/54.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🤔</div>
+            <div class="beat-info">
+                <div class="beat-title">PENSEE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/55.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😴</div>
+            <div class="beat-info">
+                <div class="beat-title">PRETTY GIRL</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/56.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🤘</div>
+            <div class="beat-info">
+                <div class="beat-title">TOGETHER</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/57.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">☢</div>
+            <div class="beat-info">
+                <div class="beat-title">FOLLOW ME</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/58.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😎</div>
+            <div class="beat-info">
+                <div class="beat-title">OUBLIE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/59.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👑</div>
+            <div class="beat-info">
+                <div class="beat-title">JOLIE MADAMME</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/60.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😍</div>
+            <div class="beat-info">
+                <div class="beat-title">HAITIEN</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/61.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😣</div>
+            <div class="beat-info">
+                <div class="beat-title">UNGRY</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/62.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👮‍♀️</div>
+            <div class="beat-info">
+                <div class="beat-title">PRAYER</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/63.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👳‍♂️</div>
+            <div class="beat-info">
+                <div class="beat-title">OMMEMA</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/64.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👸</div>
+            <div class="beat-info">
+                <div class="beat-title">FRIENDS</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/65.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🧨</div>
+            <div class="beat-info">
+                <div class="beat-title">SIWO</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/66.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😥</div>
+            <div class="beat-info">
+                <div class="beat-title">CRYING</div>
+                <div class="beat-genre">SAD • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/67.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👱‍♀️</div>
+            <div class="beat-info">
+                <div class="beat-title">CALME</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/68.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👨‍🦰</div>
+            <div class="beat-info">
+                <div class="beat-title">FAKE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/69.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👨‍⚕️</div>
+            <div class="beat-info">
+                <div class="beat-title">TEAM7</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/70.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🕵️‍♀️</div>
+            <div class="beat-info">
+                <div class="beat-title">MOOD</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/71.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👠</div>
+            <div class="beat-info">
+                <div class="beat-title">DOUCE</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/72.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👑</div>
+            <div class="beat-info">
+                <div class="beat-title">NAVAR💙💚</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/73.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🙆‍♂️</div>
+            <div class="beat-info">
+                <div class="beat-title">JUST DO IT</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/74.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👧</div>
+            <div class="beat-info">
+                <div class="beat-title">NOBLE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/75.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🧜‍♂️</div>
+            <div class="beat-info">
+                <div class="beat-title">SYMBA</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/76.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😌</div>
+            <div class="beat-info">
+                <div class="beat-title">NO ONE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/77.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">🥰</div>
+            <div class="beat-info">
+                <div class="beat-title">KINISHAMA</div>
+                <div class="beat-genre">AFRO• 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/78.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😏</div>
+            <div class="beat-info">
+                <div class="beat-title">ALPHIE</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/79.mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">😫</div>
+            <div class="beat-info">
+                <div class="beat-title">COME</div>
+                <div class="beat-genre">DRILL • 140 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/80.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">💞</div>
+            <div class="beat-info">
+                <div class="beat-title">FOR YOU</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/81.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+       <div class="beat-item">
+            <div class="beat-icon">👱‍♀️</div>
+            <div class="beat-info">
+                <div class="beat-title">ELISABETH</div>
+                <div class="beat-genre">AFRO • 100 BPM</div>
+            </div>
+            <audio controls>
+                <source src="music/82.mp4" type="audio/mpeg">
+            </audio>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos">
+        <h2 class="section-title">🎬 Mes Vidéos</h2>
+        <div class="video-grid">
+            <div class="video-card">
+                <h3>Ecouter dans le calme</h3>
+                <div class="video-wrapper">
+                    <video autoplay muted loop playsinline>
+                        <source src="video/one.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="video-card">
+                <h3>Quand vous perdez espoir</h3>
+                <div class="video-wrapper">
+                    <video autoplay muted loop playsinline>
+                        <source src="video/for.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="video-card">
+                <h3>Lorsque vous etes brisé</h3>
+                <div class="video-wrapper">
+                    <video autoplay muted loop playsinline>
+                        <source src="video/five.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">À Propos</h2>
+        <div class="about-content">
+            <p>Producteur de beats professionnel avec plusieurs années d'expérience dans l'industrie musicale. Spécialisé dans le Trap, Drill, Hip-Hop et bien plus encore.</p>
+            <p>J'ai collaboré avec de nombreux artistes et je crée des instrumentales de qualité studio pour des projets de tous niveaux.</p>
+            <p>Mon objectif est de créer des beats uniques qui font ressortir le meilleur de chaque artiste.</p>
+            <p>Abonnez-vous a ma chaine youtube svp les gars c'est hypper important!!!</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-content">
+            <p style="font-size: 1.2em; margin-bottom: 20px;">Besoin d'un beat sur mesure ? Travaillons ensemble !</p>
+            <div class="contact-buttons">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=theandrique.louisjuste@gmail.com" target="_blank" class="contact-button">📧 Email</a>
+                <a href="https://wa.me/50947462529" target="_blank" class="contact-button">💬 WhatsApp</a>
+                <a href="https://wa.me/50947462529" target="_blank" class="contact-button">💰 Acheter des Beats</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/dany_beats/" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@danybeats08?sub_confirmation=1" target="_blank">YouTube</a>
+            <a href="https://soundcloud.com/danybeats08" target="_blank">SoundCloud</a>
+            <a href="https://open.spotify.com/user/31pphgmkwdpoquxdswri7x52uxgm" target="_blank">Spotify</a>
+        </div>
+        <p>&copy; 2024 Beats Studio. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <script>
+    function toggleMenu() {
+        // ... ou gen deja sa
+    }
+
+    // ... smooth scroll code ou a ...
+
+    // AJOUTE SA LA ⬇️
+    let currentAudio = null;
+
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.addEventListener('play', function() {
+            if (currentAudio && currentAudio !== this) {
+                currentAudio.pause();
+            }
+            currentAudio = this;
+        });
+    });
+</script>
+</body>
+</html>
