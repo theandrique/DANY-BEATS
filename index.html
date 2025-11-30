@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANY BEATS</title>
@@ -751,6 +752,14 @@
     </style>
 </head>
 <body>
+    <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Accueil</a></li>
+    <li><a href="#beats">Beats</a></li>
+    <li><a href="#videos">Vidéos</a></li>
+    <li><a href="#about">À Propos</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="admin.html" style="opacity: 0.5;">🔐</a></li>  <!-- ← AJOUTE SA -->
+</ul>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -2368,7 +2377,7 @@
             <!-- Comment Form -->
             <div class="comment-form">
                 <input type="text" id="userName" placeholder="Votre nom *" required>
-                <input type="email" id="userEmail" placeholder="Votre email (opsyonèl)">
+                <input type="email" id="userEmail" placeholder="Votre email (optionnel)" >
                 <textarea id="userComment" placeholder="Ecrire votre commentaire ici... *" rows="5" required></textarea>
                 <button onclick="submitComment()" class="submit-comment-btn">📤 Envoyer un commentaire</button>
             </div>
@@ -2673,7 +2682,7 @@ function submitComment() {
     const userComment = document.getElementById('userComment').value.trim();
     
     if (!userName || !userComment) {
-        alert('⚠️ Nous vous prions de remplir ce champ!');
+        alert('⚠️ Tanpri ranpli non ou ak kòmantè a!');
         return;
     }
     
@@ -2775,5 +2784,27 @@ window.addEventListener('DOMContentLoaded', displayComments);
     </div>
 </div>
 </body>
-</html>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAq-AOKPL6vdMa9GtjF8mqaD3aIaxO2YT0",
+    authDomain: "danybeats-a26c8.firebaseapp.com",
+    projectId: "danybeats-a26c8",
+    storageBucket: "danybeats-a26c8.firebasestorage.app",
+    messagingSenderId: "454390414582",
+    appId: "1:454390414582:web:1a2685bc2fa5f5431a00d7",
+    measurementId: "G-WXF2N1Z181"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</html>
