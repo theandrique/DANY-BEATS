@@ -1,4 +1,4 @@
-so<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -211,7 +211,212 @@ so<!DOCTYPE html>
             padding: 20px;
             transition: transform 0.3s ease;
         }
+/* Beat Actions (Like & Comment Buttons) */
+.beat-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
 
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255,0,128,0.15);
+    border: 2px solid rgba(255,0,128,0.4);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #fff;
+    font-weight: bold;
+}
+
+.action-btn .icon {
+    font-size: 1.3em;
+}
+
+.action-btn .count {
+    font-size: 1em;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,0,128,0.3);
+}
+
+.like-btn:hover {
+    background: rgba(255,0,128,0.25);
+    border-color: #ff0080;
+}
+
+.like-btn.liked {
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    border-color: #ff0080;
+    animation: likeAnimation 0.5s;
+}
+
+@keyframes likeAnimation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.comment-btn:hover {
+    background: rgba(255,140,0,0.25);
+    border-color: #ff8c00;
+}
+
+/* Comment Modal */
+.comment-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s;
+}
+
+.comment-modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border: 3px solid #ff0080;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.4s;
+}
+
+.modal-header {
+    padding: 25px 30px;
+    border-bottom: 2px solid rgba(255,0,128,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,0,128,0.1);
+}
+
+.modal-header h3 {
+    color: #ff0080;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.modal-close {
+    background: rgba(255,0,128,0.2);
+    border: 2px solid #ff0080;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: all 0.3s;
+}
+
+.modal-close:hover {
+    background: #ff0080;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.comment-form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.comment-form-modal input,
+.comment-form-modal textarea {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,0,128,0.1);
+    border: 2px solid rgba(255,0,128,0.3);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+.comment-form-modal input::placeholder,
+.comment-form-modal textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.comment-form-modal input:focus,
+.comment-form-modal textarea:focus {
+    outline: none;
+    border-color: #ff0080;
+    box-shadow: 0 0 15px rgba(255,0,128,0.3);
+}
+
+.submit-modal-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-modal-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255,0,128,0.4);
+}
+
+.beat-comments-display h4 {
+    color: #ff0080;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.beat-comment-item {
+    background: rgba(255,0,128,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 3px solid #ff0080;
+}
+
+.beat-comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.beat-comment-author {
+    font-weight: bold;
+    color: #ff0080;
+}
+
+.beat-comment-date {
+    font-size: 0.85em;
+    opacity: 0.6;
+}
+
+.beat-comment-text {
+    line-height: 1.5;
+    opacity: 0.9;
+}
         .video-card:hover {
             transform: translateY(-10px);
             border-color: #ff0080;
@@ -324,143 +529,190 @@ so<!DOCTYPE html>
             font-size: 1.5em;
             cursor: pointer;
         }
-        
-    /* Popup YouTube */
-.youtube-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 10000;
-    justify-content: center;
+        /* Search Bar */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
     align-items: center;
 }
 
-.youtube-popup.show {
-    display: flex;
-    animation: fadeIn 0.5s;
-}
-
-.popup-content {
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 500px;
-    border: 3px solid #ff0080;
-    animation: slideUp 0.5s;
-}
-
-.popup-content h2 {
-    color: #ff0080;
-    margin-bottom: 20px;
-    font-size: 2em;
-}
-
-.popup-content p {
-    margin-bottom: 30px;
+#searchInput {
+    width: 100%;
+    padding: 18px 50px 18px 20px;
     font-size: 1.1em;
-    line-height: 1.6;
+    background: linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1));
+    border: 2px solid rgba(255,0,128,0.5);
+    border-radius: 50px;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s;
 }
 
-.popup-buttons {
+#searchInput::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+#searchInput:focus {
+    border-color: #ff0080;
+    box-shadow: 0 0 20px rgba(255,0,128,0.3);
+}
+
+.clear-btn {
+    position: absolute;
+    right: 15px;
+    background: rgba(255,0,128,0.3);
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.3s;
+    display: none;
+}
+
+.clear-btn.show {
+    display: block;
+}
+
+.clear-btn:hover {
+    background: #ff0080;
+    transform: rotate(90deg);
+}
+
+.search-results {
+    text-align: center;
+    margin-top: 15px;
+    color: #ff0080;
+    font-weight: bold;
+}
+
+.beat-item.hidden {
+    display: none;
+}
+
+.beat-item.highlight {
+    animation: highlightBeat 0.5s;
+}
+
+@keyframes highlightBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(255,0,128,0.5);
+    }
+}
+/* Comments Section */
+.comments-section {
+    max-width: 800px;
+    margin: 60px auto 0;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(255,0,128,0.05), rgba(255,140,0,0.05));
+    border-radius: 20px;
+    border: 2px solid rgba(255,0,128,0.3);
+}
+
+.comment-form {
     display: flex;
+    flex-direction: column;
     gap: 15px;
-    justify-content: center;
+    margin-bottom: 40px;
 }
 
-.popup-btn {
-    padding: 15px 30px;
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,0,128,0.1);
+    border: 2px solid rgba(255,0,128,0.3);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.comment-form input::placeholder,
+.comment-form textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #ff0080;
+    box-shadow: 0 0 15px rgba(255,0,128,0.3);
+}
+
+.submit-comment-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    color: white;
     border: none;
     border-radius: 10px;
     font-size: 1.1em;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.popup-btn.subscribe {
-    background: linear-gradient(135deg, #ff0080, #ff8c00);
-    color: white;
-}
-
-.popup-btn.later {
-    background: transparent;
-    border: 2px solid #ff0080;
-    color: #ff0080;
-}
-
-.popup-btn:hover {
-    transform: scale(1.05);
-}
-
-/* Like Button */
-.like-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.like-btn {
-    background: rgba(255,0,128,0.2);
-    border: 2px solid #ff0080;
-    color: #ff0080;
-    padding: 8px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
     transition: all 0.3s;
+}
+
+.submit-comment-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255,0,128,0.4);
+}
+
+.comments-display {
+    margin-top: 40px;
+}
+
+.comment-item {
+    background: rgba(255,0,128,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #ff0080;
+    animation: slideIn 0.5s;
+}
+
+.comment-header {
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
     align-items: center;
-    gap: 5px;
 }
 
-.like-btn:hover {
-    background: #ff0080;
-    color: white;
-    transform: scale(1.05);
+.comment-author {
+    font-weight: bold;
+    color: #ff0080;
+    font-size: 1.1em;
 }
 
-.like-btn.liked {
-    background: #ff0080;
-    color: white;
+.comment-date {
+    font-size: 0.85em;
+    opacity: 0.6;
 }
 
-.like-count {
-    font-size: 0.9em;
+.comment-text {
+    line-height: 1.6;
+    opacity: 0.9;
 }
 
-/* Playing Indicator */
-.beat-item.playing {
-    background: linear-gradient(135deg, rgba(255,0,128,0.3), rgba(255,140,0,0.3));
-    border-color: #ff0080;
-    box-shadow: 0 0 20px rgba(255,0,128,0.4);
-}
-
-.beat-item.playing .beat-icon {
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-@keyframes slideUp {
+@keyframes slideIn {
     from {
-        transform: translateY(50px);
         opacity: 0;
+        transform: translateX(-20px);
     }
     to {
-        transform: translateY(0);
         opacity: 1;
+        transform: translateX(0);
     }
 }
         @media (max-width: 768px) {
@@ -499,23 +751,6 @@ so<!DOCTYPE html>
     </style>
 </head>
 <body>
-
-<!-- YouTube Popup -->
-<div id="youtubePopup" class="youtube-popup">
-    <div class="popup-content">
-        <h2>🎵 Sipòte DANY BEATS! 🎵</h2>
-        <p>Abòne w sou YouTube pou jwenn tout nouvo beats yo, tutorials, epi behind the scenes!</p>
-        <p><strong>Se gratis epi li ede anpil! 🙏</strong></p>
-        <div class="popup-buttons">
-            <button class="popup-btn subscribe" onclick="subscribeYoutube()">
-                📺 Abòne Kounye a!
-            </button>
-            <button class="popup-btn later" onclick="closePopup()">
-                ⏰ Pita
-            </button>
-        </div>
-    </div>
-</div>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -527,6 +762,7 @@ so<!DOCTYPE html>
                 <li><a href="#videos">Vidéos</a></li>
                 <li><a href="#about">À Propos</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="pluggins.html">Pluggins & vst</a></li>
             </ul>
         </div>
     </nav>
@@ -545,19 +781,37 @@ so<!DOCTYPE html>
     </section>
 
     <!-- Beats Section -->
+    
+     <!-- Search Bar -->
+<div class="search-container">
+     <h2 id="beats" class="section-title">🔥 Mes Beats</h2>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Cherche ton son preferé..." onkeyup="searchBeats()">
+        <button onclick="clearSearch()" class="clear-btn">✕</button>
+    </div>
+    <div id="searchResults" class="search-results"></div>
+</div>
     <section id="beats">
-        <h2 class="section-title">🔥 Mes Beats</h2>
-        
-        <div class="beat-item">
-            <div class="beat-icon">🎹</div>
-            <div class="beat-info">
-                <div class="beat-title">SUNSET</div>
-                <div class="beat-genre">ARO-POP • 100 BPM</div>
-            </div>
-            <audio controls>
-                <source src="music/1.mpeg" type="audio/mpeg">
-            </audio>
-        </div>
+       <div class="beat-item" data-beat-id="1">
+    <div class="beat-icon">🎹</div>
+    <div class="beat-info">
+        <div class="beat-title">SUNSET</div>
+        <div class="beat-genre">AFRO-POP • 100 BPM</div>
+    </div>
+    <audio controls>
+        <source src="music/1.mpeg" type="audio/mpeg">
+    </audio>
+    <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(1)" id="like-btn-1">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-1">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(1, 'SUNSET')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-1">0</span>
+        </button>
+    </div>
+</div>
 
         <div class="beat-item">
             <div class="beat-icon">🎧</div>
@@ -568,6 +822,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/2.mpeg" type="audio/mpeg">
             </audio>
+            <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(2)" id="like-btn-2">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-2">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(2, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-2">0</span>
+        </button>
+    </div>
         </div>
 
         <div class="beat-item">
@@ -579,6 +843,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/3.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(3)" id="like-btn-3">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-3">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(3, 'NO ONE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-3">0</span>
+        </button>
+    </div>
         </div>
 
         <div class="beat-item">
@@ -590,6 +864,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/4.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(4)" id="like-btn-4">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-4">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(4, 'TRANQUILLE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-4">0</span>
+        </button>
+    </div>
         </div>
          <div class="beat-item">
             <div class="beat-icon">💎</div>
@@ -600,6 +884,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/5.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(5)" id="like-btn-5">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-5">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(5, 'LOVE STORY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-5">0</span>
+        </button>
+    </div>
         </div>
          <div class="beat-item">
             <div class="beat-icon">🎀</div>
@@ -609,7 +903,17 @@ so<!DOCTYPE html>
             </div>
             <audio controls>
                 <source src="music/6.mpeg" type="audio/mpeg">
-            </audio> 
+            </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(6)" id="like-btn-6">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-6">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(6, 'MA ROSE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-6">0</span>
+        </button>
+    </div> 
         </div>
               <div class="beat-item">
             <div class="beat-icon">🎃</div>
@@ -620,6 +924,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/7.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(7)" id="like-btn-7">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-7">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(7, 'DIEU EST GRAND')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-7">0</span>
+        </button>
+    </div>
         </div>
               <div class="beat-item">
             <div class="beat-icon">👑</div>
@@ -630,6 +944,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/8.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(8)" id="like-btn-8">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-8">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(8, 'HAITIENNE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-8">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎈</div>
@@ -640,6 +964,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/9.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(9)" id="like-btn-9">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-9">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(9, 'SHOR')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-9">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎁</div>
@@ -650,6 +984,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/10.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(10)" id="like-btn-10">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-10">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(10, 'WILL I ARRIVE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-10">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎗</div>
@@ -660,6 +1004,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/11.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(11)" id="like-btn-11">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-11">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(11, 'BEAUTY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-11">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎭</div>
@@ -670,6 +1024,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/12.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(12)" id="like-btn-12">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-12">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(12, 'ALWAYS')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-12">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎏</div>
@@ -680,6 +1044,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/13.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(13)" id="like-btn-13">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-13">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(13, 'DANY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-13">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🥽</div>
@@ -690,6 +1064,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/14.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(14)" id="like-btn-14">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-14">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(14, 'ECOLIER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-14">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🥼</div>
@@ -700,6 +1084,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/15.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(15)" id="like-btn-15">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-15">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(15, 'HERITIER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-15">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎄</div>
@@ -710,6 +1104,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/16.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(16)" id="like-btn-16">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-16">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(16, 'NICA')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-16">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">👖</div>
@@ -720,6 +1124,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/17.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(17)" id="like-btn-17">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-17">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(17, 'BALCK BOY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-17">0</span>
+        </button>
+    </div>
         </div>
         <div class="beat-item">
             <div class="beat-icon">💗</div>
@@ -730,6 +1144,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/19.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(18)" id="like-btn-18">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-18">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(18, 'AYOO')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-18">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">☮</div>
@@ -738,8 +1162,18 @@ so<!DOCTYPE html>
                 <div class="beat-genre">DRILL • 140 BPM</div>
             </div>
             <audio controls>
-                <source src="music/20.ogg" type="audio/mpeg">
+                <source src="musiC/20.ogg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(19)" id="like-btn-19">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-19">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(19, 'FEELING')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-19">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎅</div>
@@ -750,6 +1184,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/21.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(20)" id="like-btn-20">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-20">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(20, 'GREAT')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-20">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">👸</div>
@@ -760,6 +1204,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/22.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(21)" id="like-btn-21">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-21">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(21, 'CHILD')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-21">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">😎</div>
@@ -770,6 +1224,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/23.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(22)" id="like-btn-22">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-22">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(22, 'NAVAROO')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-22">0</span>
+        </button>
+    </div>
         </div>
         <div class="beat-item">
             <div class="beat-icon">🥰</div>
@@ -780,6 +1244,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/25.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(23)" id="like-btn-23">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-23">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(23, 'I`M SORRY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-23">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🤐</div>
@@ -790,6 +1264,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/26.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(24)" id="like-btn-24">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-24">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(24, 'SILENCE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-24">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">👑</div>
@@ -800,6 +1284,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/27.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(25)" id="like-btn-25">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-25">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(25, 'PARIS')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-25">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">👩</div>
@@ -810,6 +1304,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/28.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(26)" id="like-btn-26">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-26">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(26, 'VANESSA')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-26">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">💟</div>
@@ -820,6 +1324,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/29.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(27)" id="like-btn-27">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-27">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(27, 'FORGIVE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-27">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">💖</div>
@@ -830,6 +1344,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/30.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(28)" id="like-btn-28">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-28">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(28, 'LOVE STORY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-28">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">💿</div>
@@ -840,6 +1364,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/31.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(29)" id="like-btn-29">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-29">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(29, 'TO NIGHT')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-2">0</span>
+        </button>
+    </div>
         </div>
                   </div>
                <div class="beat-item">
@@ -851,6 +1385,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/33.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(30)" id="like-btn-30">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-30">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(30, 'SOURRIRE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-30">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎭</div>
@@ -861,6 +1405,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/34.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(31)" id="like-btn-31">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-31">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(31, 'PASSION 2')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-31">0</span>
+        </button>
+    </div>
         </div>
                <div class="beat-item">
             <div class="beat-icon">🎨</div>
@@ -871,6 +1425,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/35.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(32)" id="like-btn-32">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-32">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(32, 'DOUCEUR')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-32">0</span>
+        </button>
+    </div>
         </div>
         </div>
                <div class="beat-item">
@@ -882,6 +1446,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/37.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(33)" id="like-btn-33">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-33">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(33, 'BROCKEN')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-33">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👰</div>
@@ -892,6 +1466,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/38.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(34)" id="like-btn-34">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-34">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(34, 'MAMAN')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-34">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😏</div>
@@ -902,6 +1486,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/39.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(35)" id="like-btn-35">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-35">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(35, 'ALPHIE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-35">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😪</div>
@@ -912,6 +1506,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/40.ogg" type="audio/ogg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(36)" id="like-btn-36">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-36">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(36, 'MOONLIGHT')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-36">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🥱</div>
@@ -922,6 +1526,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/41.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(37)" id="like-btn-37">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-37">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(37, 'MELISSA')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-37">0</span>
+        </button>
+    </div>
         </div>
         </div>
        <div class="beat-item">
@@ -933,6 +1547,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/43.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(38)" id="like-btn-38">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-38">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(38, 'TASTE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-38">0</span>
+        </button>
+    </div>
         </div>
         <div class="beat-item">
             <div class="beat-icon">🥎</div>
@@ -943,6 +1567,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/45.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(39)" id="like-btn-39">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-39">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(39, 'LAST DANCE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-39">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👢</div>
@@ -953,6 +1587,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/46.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(46)" id="like-btn-46">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-46">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(46, 'JOY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-46">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🍚</div>
@@ -963,6 +1607,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/47.ogg" type="audio/ogg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(47)" id="like-btn-47">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-47">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(47, 'PLEASE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-47">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🍗</div>
@@ -973,6 +1627,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/48.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(48)" id="like-btn-48">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-48">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(48, 'AMANDA')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-48">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">💖</div>
@@ -983,6 +1647,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/49.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(49)" id="like-btn-49">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-49">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(49, 'SOURRIRE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-49">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">💌</div>
@@ -993,6 +1667,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/50.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(50)" id="like-btn-50">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-50">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(50, 'MANIOK')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-50">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">💛</div>
@@ -1003,6 +1687,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/51.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(51)" id="like-btn-51">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-51">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(51, 'HEART BREACK')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-51">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">💢</div>
@@ -1013,6 +1707,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/52.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(52)" id="like-btn-52">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-52">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(52, 'CAELLE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-52">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🤡</div>
@@ -1023,6 +1727,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/53.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(53)" id="like-btn-53">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-53">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(53, 'ANTIDOTE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-53">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😥</div>
@@ -1033,6 +1747,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/54.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(54)" id="like-btn-54">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-54">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(54, 'SOLITUDE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-54">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🤔</div>
@@ -1043,6 +1767,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/55.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(55)" id="like-btn-55">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-55">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(55, 'PENSEE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-55">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😴</div>
@@ -1053,6 +1787,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/56.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(56)" id="like-btn-56">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-56">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(56, 'PRETTY GIRL')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-56">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🤘</div>
@@ -1063,6 +1807,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/57.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(57)" id="like-btn-57">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-57">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(57, 'TOGETHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-57">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">☢</div>
@@ -1073,6 +1827,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/58.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(58)" id="like-btn-58">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-58">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(58, 'FOLLOW ME')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-58">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😎</div>
@@ -1083,6 +1847,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/59.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(59)" id="like-btn-59">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-59">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(59, 'OUBLIE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-59">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👑</div>
@@ -1093,6 +1867,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/60.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(60)" id="like-btn-60">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-60">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(60, 'JOLIE MADAMME')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-60">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😍</div>
@@ -1103,6 +1887,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/61.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(61)" id="like-btn-61">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-61">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(61, 'HAITEN')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-61">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😣</div>
@@ -1113,6 +1907,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/62.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(62)" id="like-btn-62">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-62">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(62, 'UNGRY')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-62">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👮‍♀️</div>
@@ -1123,6 +1927,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/63.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(63)" id="like-btn-63">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-63">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(63, 'PRAYER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-63">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👳‍♂️</div>
@@ -1133,6 +1947,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/64.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(64)" id="like-btn-64">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-64">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(64, 'OMMEMA')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-64">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👸</div>
@@ -1143,6 +1967,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/65.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(65)" id="like-btn-65">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-65">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(65, 'FRIENDS')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-65">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🧨</div>
@@ -1153,6 +1987,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/66.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(66)" id="like-btn-66">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-66">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(66, 'SIWO')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-66">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😥</div>
@@ -1163,6 +2007,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/67.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(67)" id="like-btn-67">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-67">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(67, 'CRYING')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-67">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👱‍♀️</div>
@@ -1173,6 +2027,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/68.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(68)" id="like-btn-68">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-68">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(68, 'CALME')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-68">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👨‍🦰</div>
@@ -1183,6 +2047,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/69.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(69)" id="like-btn-69">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-69">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(69, 'FAKE')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-69">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👨‍⚕️</div>
@@ -1193,6 +2067,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/70.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(70)" id="like-btn-70">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-70">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(70, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-70">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🕵️‍♀️</div>
@@ -1203,6 +2087,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/71.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(71)" id="like-btn-71">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-71">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(71, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-71">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👠</div>
@@ -1213,6 +2107,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/72.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(72)" id="like-btn-72">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-72">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(72, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-72">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👑</div>
@@ -1223,6 +2127,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/73.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(73)" id="like-btn-73">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-73">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(73, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-73">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🙆‍♂️</div>
@@ -1233,6 +2147,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/74.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(74)" id="like-btn-74">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-74">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(74, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-74">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👧</div>
@@ -1243,6 +2167,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/75.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(75)" id="like-btn-75">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-75">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(75, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-75">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🧜‍♂️</div>
@@ -1253,6 +2187,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/76.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(76)" id="like-btn-76">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-76">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(76, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-76">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😌</div>
@@ -1263,6 +2207,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/77.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(77)" id="like-btn-77">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-77">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(77, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-77">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">🥰</div>
@@ -1273,6 +2227,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/78.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(78)" id="like-btn-78">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-78">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(78, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-78">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😏</div>
@@ -1283,6 +2247,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/79.mpeg" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(79)" id="like-btn-79">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-79">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(79, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-79">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">😫</div>
@@ -1293,6 +2267,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/80.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(80)" id="like-btn-80">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-80">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(80, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-80">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">💞</div>
@@ -1303,6 +2287,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/81.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(81)" id="like-btn-81">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-81">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(81, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-81">0</span>
+        </button>
+    </div>
         </div>
        <div class="beat-item">
             <div class="beat-icon">👱‍♀️</div>
@@ -1313,6 +2307,16 @@ so<!DOCTYPE html>
             <audio controls>
                 <source src="music/82.mp4" type="audio/mpeg">
             </audio>
+             <div class="beat-actions">
+        <button class="action-btn like-btn" onclick="toggleLikeBeat(82)" id="like-btn-82">
+            <span class="icon">❤️</span>
+            <span class="count" id="like-count-82">0</span>
+        </button>
+        <button class="action-btn comment-btn" onclick="openCommentModal(82, 'FATHER')">
+            <span class="icon">💬</span>
+            <span class="count" id="comment-count-82">0</span>
+        </button>
+    </div>
         </div>
     </section>
 
@@ -1356,6 +2360,28 @@ so<!DOCTYPE html>
             <p>Mon objectif est de créer des beats uniques qui font ressortir le meilleur de chaque artiste.</p>
             <p>Abonnez-vous a ma chaine youtube svp les gars c'est hypper important!!!</p>
         </div>
+       <!-- Comments Section -->
+        <div class="comments-section">
+            <h3 style="color: #ff0080; text-align: center; margin-bottom: 30px;">💬 Vous en pensez quoi?</h3>
+            <p style="text-align: center; margin-bottom: 30px;">Laisse nous un commentaire pour connaitre votre avis!</p>
+            
+            <!-- Comment Form -->
+            <div class="comment-form">
+                <input type="text" id="userName" placeholder="Votre nom *" required>
+                <input type="email" id="userEmail" placeholder="Votre email (opsyonèl)">
+                <textarea id="userComment" placeholder="Ecrire votre commentaire ici... *" rows="5" required></textarea>
+                <button onclick="submitComment()" class="submit-comment-btn">📤 Envoyer un commentaire</button>
+            </div>
+
+            <!-- Comments Display -->
+            <div class="comments-display" id="commentsDisplay">
+                <h4 style="color: #ff0080; margin-bottom: 20px;">📝 Liste des commentaire:</h4>
+                <div id="commentsList">
+                    <p style="opacity: 0.7; text-align: center;">Aucun commentaire pour le moment. Tu peux etre le premier!</p>
+                </div>
+            </div>
+        </div>
+    </section>
     </section>
 
     <!-- Contact Section -->
@@ -1379,10 +2405,168 @@ so<!DOCTYPE html>
             <a href="https://soundcloud.com/danybeats08" target="_blank">SoundCloud</a>
             <a href="https://open.spotify.com/user/31pphgmkwdpoquxdswri7x52uxgm" target="_blank">Spotify</a>
         </div>
-        <p>&copy; 2024 Beats Studio. Tous droits réservés.</p>
+        <p>&copy; 2025 DANY BEATS. Tous droits réservés.</p>
     </footer>
 
     <script>
+        // Beat Like System
+let beatLikes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
+
+function toggleLikeBeat(beatId) {
+    const likeBtn = document.getElementById('like-btn-' + beatId);
+    const likeCount = document.getElementById('like-count-' + beatId);
+    
+    if (!beatLikes[beatId]) {
+        beatLikes[beatId] = { count: 0, liked: false };
+    }
+    
+    if (beatLikes[beatId].liked) {
+        beatLikes[beatId].count--;
+        beatLikes[beatId].liked = false;
+        likeBtn.classList.remove('liked');
+    } else {
+        beatLikes[beatId].count++;
+        beatLikes[beatId].liked = true;
+        likeBtn.classList.add('liked');
+    }
+    
+    likeCount.textContent = beatLikes[beatId].count;
+    localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
+}
+
+// Load likes on page load
+window.addEventListener('DOMContentLoaded', function() {
+    Object.keys(beatLikes).forEach(beatId => {
+        const likeCount = document.getElementById('like-count-' + beatId);
+        const likeBtn = document.getElementById('like-btn-' + beatId);
+        if (likeCount) {
+            likeCount.textContent = beatLikes[beatId].count;
+            if (beatLikes[beatId].liked) {
+                likeBtn.classList.add('liked');
+            }
+        }
+    });
+    loadAllCommentCounts();
+});
+
+// Comment Modal System
+let currentBeatId = null;
+let currentBeatName = '';
+let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) || {};
+
+function openCommentModal(beatId, beatName) {
+    currentBeatId = beatId;
+    currentBeatName = beatName;
+    
+    document.getElementById('modalTitle').textContent = `💬 Commenter: ${beatName}`;
+    document.getElementById('commentModal').classList.add('show');
+    
+    loadBeatComments(beatId);
+}
+
+function closeCommentModal() {
+    document.getElementById('commentModal').classList.remove('show');
+    document.getElementById('modalUserName').value = '';
+    document.getElementById('modalUserComment').value = '';
+}
+
+function submitBeatComment() {
+    const userName = document.getElementById('modalUserName').value.trim();
+    const userComment = document.getElementById('modalUserComment').value.trim();
+    
+    if (!userName || !userComment) {
+        alert('⚠️ Veuillez remplir tous les champs!');
+        return;
+    }
+    
+    const comment = {
+        name: userName,
+        text: userComment,
+        date: new Date().toLocaleString('fr-FR'),
+        beatId: currentBeatId,
+        beatName: currentBeatName
+    };
+    
+    if (!beatComments[currentBeatId]) {
+        beatComments[currentBeatId] = [];
+    }
+    
+    beatComments[currentBeatId].unshift(comment);
+    localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
+    
+    // Send email notification
+    sendBeatCommentEmail(comment);
+    
+    loadBeatComments(currentBeatId);
+    updateCommentCount(currentBeatId);
+    
+    document.getElementById('modalUserName').value = '';
+    document.getElementById('modalUserComment').value = '';
+    
+    alert('✅ Merci! Votre commentaire a été ajouté!');
+}
+
+function loadBeatComments(beatId) {
+    const commentsList = document.getElementById('beatCommentsList');
+    const comments = beatComments[beatId] || [];
+    
+    if (comments.length === 0) {
+        commentsList.innerHTML = '<p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>';
+        return;
+    }
+    
+    commentsList.innerHTML = comments.map(comment => `
+        <div class="beat-comment-item">
+            <div class="beat-comment-header">
+                <span class="beat-comment-author">👤 ${comment.name}</span>
+                <span class="beat-comment-date">${comment.date}</span>
+            </div>
+            <div class="beat-comment-text">${comment.text}</div>
+        </div>
+    `).join('');
+}
+
+function updateCommentCount(beatId) {
+    const countEl = document.getElementById('comment-count-' + beatId);
+    if (countEl && beatComments[beatId]) {
+        countEl.textContent = beatComments[beatId].length;
+    }
+}
+
+function loadAllCommentCounts() {
+    Object.keys(beatComments).forEach(beatId => {
+        updateCommentCount(beatId);
+    });
+}
+
+function sendBeatCommentEmail(comment) {
+    const subject = encodeURIComponent(`Nouveau commentaire sur ${comment.beatName}`);
+    const body = encodeURIComponent(
+        `Nouveau commentaire sur le beat: ${comment.beatName}\n\n` +
+        `Nom: ${comment.name}\n` +
+        `Date: ${comment.date}\n\n` +
+        `Commentaire:\n${comment.text}`
+    );
+    
+    const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
+    
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = mailtoLink;
+    document.body.appendChild(iframe);
+    
+    setTimeout(() => {
+        document.body.removeChild(iframe);
+    }, 1000);
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('commentModal');
+    if (e.target === modal) {
+        closeCommentModal();
+    }
+});
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
@@ -1406,9 +2590,69 @@ so<!DOCTYPE html>
     </script>
     <script>
     function toggleMenu() {
+        
         // ... ou gen deja sa
     }
+// Search Beats Function
+function searchBeats() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase().trim();
+    const clearBtn = document.querySelector('.clear-btn');
+    const searchResults = document.getElementById('searchResults');
+    const beatItems = document.querySelectorAll('.beat-item');
+    
+    let foundCount = 0;
+    
+    // Show/hide clear button
+    if (filter.length > 0) {
+        clearBtn.classList.add('show');
+    } else {
+        clearBtn.classList.remove('show');
+    }
+    
+    // Filter beats
+    beatItems.forEach(beat => {
+        const title = beat.querySelector('.beat-title').textContent.toLowerCase();
+        const genre = beat.querySelector('.beat-genre').textContent.toLowerCase();
+        
+        if (filter === '' || title.includes(filter) || genre.includes(filter)) {
+            beat.classList.remove('hidden');
+            beat.classList.add('highlight');
+            setTimeout(() => beat.classList.remove('highlight'), 500);
+            foundCount++;
+        } else {
+            beat.classList.add('hidden');
+        }
+    });
+    
+    // Show results count
+    if (filter.length > 0) {
+        if (foundCount === 0) {
+            searchResults.innerHTML = `❌ Aucun beat pour "${input.value}",Essaie avec un autre nom`;
+        } else if (foundCount === 1) {
+            searchResults.innerHTML = `✓ ${foundCount} music`;
+        } else {
+            searchResults.innerHTML = `✓ ${foundCount} music`;
+        }
+    } else {
+        searchResults.innerHTML = '';
+    }
+}
 
+function clearSearch() {
+    const input = document.getElementById('searchInput');
+    const clearBtn = document.querySelector('.clear-btn');
+    const searchResults = document.getElementById('searchResults');
+    const beatItems = document.querySelectorAll('.beat-item');
+    
+    input.value = '';
+    clearBtn.classList.remove('show');
+    searchResults.innerHTML = '';
+    
+    beatItems.forEach(beat => {
+        beat.classList.remove('hidden');
+    });
+}
     // ... smooth scroll code ou a ...
 
     // AJOUTE SA LA ⬇️
@@ -1422,6 +2666,113 @@ so<!DOCTYPE html>
             currentAudio = this;
         });
     });
+    // Comments System with Email Notification
+function submitComment() {
+    const userName = document.getElementById('userName').value.trim();
+    const userEmail = document.getElementById('userEmail').value.trim();
+    const userComment = document.getElementById('userComment').value.trim();
+    
+    if (!userName || !userComment) {
+        alert('⚠️ Tanpri ranpli non ou ak kòmantè a!');
+        return;
+    }
+    
+    // Create comment object
+    const comment = {
+        name: userName,
+        email: userEmail,
+        text: userComment,
+        date: new Date().toLocaleString('fr-FR')
+    };
+    
+    // Save to localStorage
+    let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
+    comments.unshift(comment); // Add to beginning
+    localStorage.setItem('danybeats_comments', JSON.stringify(comments));
+    
+    // Send email notification to you
+    sendEmailNotification(comment);
+    
+    // Display comment
+    displayComments();
+    
+    // Clear form
+    document.getElementById('userName').value = '';
+    document.getElementById('userEmail').value = '';
+    document.getElementById('userComment').value = '';
+    
+    alert('✅ Merci pour votre commentaire!');
+}
+
+function sendEmailNotification(comment) {
+    // Create mailto link
+    const subject = encodeURIComponent('Nouveau commentaire sur  Dany Beats');
+    const body = encodeURIComponent(
+        `Nouvo kòmantè:\n\n` +
+        `Non: ${comment.name}\n` +
+        `Email: ${comment.email || 'Pa bay'}\n` +
+        `Dat: ${comment.date}\n\n` +
+        `Kòmantè:\n${comment.text}`
+    );
+    
+    const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open email client (silent - won't interrupt user)
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = mailtoLink;
+    document.body.appendChild(iframe);
+    
+    setTimeout(() => {
+        document.body.removeChild(iframe);
+    }, 1000);
+}
+
+function displayComments() {
+    const commentsList = document.getElementById('commentsList');
+    let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
+    
+    if (comments.length === 0) {
+        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Okenn kòmantè ankò. Ou ka premye moun!</p>';
+        return;
+    }
+    
+    commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+            <div class="comment-header">
+                <span class="comment-author">👤 ${comment.name}</span>
+                <span class="comment-date">${comment.date}</span>
+            </div>
+            <div class="comment-text">${comment.text}</div>
+        </div>
+    `).join('');
+}
+
+// Load comments when page loads
+window.addEventListener('DOMContentLoaded', displayComments);
 </script>
+<!-- Comment Modal -->
+<div id="commentModal" class="comment-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">💬 Commenter: SUNSET</h3>
+            <button class="modal-close" onclick="closeCommentModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="comment-form-modal">
+                <input type="text" id="modalUserName" placeholder="Votre nom *" required>
+                <textarea id="modalUserComment" placeholder="Votre commentaire sur ce beat... *" rows="4" required></textarea>
+                <button onclick="submitBeatComment()" class="submit-modal-btn">📤 Envoyer</button>
+            </div>
+            
+            <div class="beat-comments-display">
+                <h4>Commentaires:</h4>
+                <div id="beatCommentsList">
+                    <p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
