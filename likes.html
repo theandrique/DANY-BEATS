@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Likes - DANY BEATS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff0080;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff0080;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        /* Header */
+        .header {
+            padding: 150px 20px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,0,128,0.15), rgba(255,140,0,0.15));
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px #ff0080); }
+            50% { filter: drop-shadow(0 0 20px #ff0080); }
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.8;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: linear-gradient(135deg, rgba(255,0,128,0.2), rgba(255,140,0,0.2));
+            border: 2px solid rgba(255,0,128,0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .empty-state .icon {
+            font-size: 6em;
+            margin-bottom: 30px;
+            opacity: 0.5;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .empty-state h2 {
+            color: #ff0080;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+
+        .empty-state p {
+            opacity: 0.7;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255,0,128,0.3);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,0,128,0.5);
+        }
+
+        /* Beat Item */
+        .beat-item {
+            background: linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1));
+            border: 2px solid rgba(255,0,128,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            transition: all 0.3s ease;
+            min-height: 140px;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .beat-item:hover {
+            background: linear-gradient(135deg, rgba(255,0,128,0.2), rgba(255,140,0,0.2));
+            transform: translateX(10px);
+            border-color: #ff0080;
+            box-shadow: 0 10px 30px rgba(255,0,128,0.3);
+        }
+
+        .beat-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .beat-info {
+            flex-grow: 1;
+        }
+
+        .beat-title {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .beat-genre {
+            opacity: 0.7;
+            font-size: 1.1em;
+        }
+
+        .beat-liked-date {
+            opacity: 0.5;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 350px;
+            height: 45px;
+        }
+
+        .beat-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255,0,128,0.15);
+            border: 2px solid rgba(255,0,128,0.4);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .action-btn .icon {
+            font-size: 1.3em;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,0,128,0.3);
+        }
+
+        .unlike-btn {
+            background: rgba(255,0,128,0.3);
+            border-color: #ff0080;
+        }
+
+        .unlike-btn:hover {
+            background: #ff0080;
+        }
+
+        .play-all-btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .play-all-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,0,128,0.5);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(255,0,128,0.1);
+            border-top: 2px solid #ff0080;
+            margin-top: 80px;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff0080;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,0.98);
+                flex-direction: column;
+                padding: 20px;
+                border-top: 2px solid #ff0080;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .beat-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .beat-actions {
+                justify-content: center;
+            }
+
+            audio {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">❤️ MES LIKES</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#beats">Beats</a></li>
+                <li><a href="likes.html">Mes Likes</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>❤️ Mes Beats Préférés</h1>
+        <p>Tous les beats que vous avez aimés</p>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar" style="display: none;">
+            <div class="stat-item">
+                <div class="stat-number" id="totalLiked">0</div>
+                <div class="stat-label">Beats Aimés</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">💖</div>
+                <div class="stat-label">Collection Perso</div>
+            </div>
+        </div>
+
+        <!-- Play All Button -->
+        <div style="text-align: center;" id="playAllSection" style="display: none;">
+            <button class="play-all-btn" id="playAllBtn" onclick="playAllBeats()">▶ Jouer Tout</button>
+        </div>
+
+        <!-- Liked Beats List -->
+        <div id="likedBeatsList"></div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <div class="icon">💔</div>
+            <h2>Aucun beat aimé pour le moment</h2>
+            <p>Retournez sur la page principale et likez vos beats préférés!</p>
+            <a href="index.html#beats" class="btn-back">🎵 Découvrir les Beats</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/dany_beats/" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@danybeats08?sub_confirmation=1" target="_blank">YouTube</a>
+            <a href="https://soundcloud.com/danybeats08" target="_blank">SoundCloud</a>
+            <a href="https://open.spotify.com/user/31pphgmkwdpoquxdswri7x52uxgm" target="_blank">Spotify</a>
+        </div>
+        <p>&copy; 2024 Dany Beats. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+// Base de données des beats
+const beatsData = {
+    1: { name: 'SUNSET', genre: 'AFRO-POP • 100 BPM', icon: '🎹', file: 'music/1.mpeg' },
+    2: { name: 'FATHER', genre: 'AFRO • 100 BPM', icon: '🎧', file: 'music/2.mpeg' },
+    3: { name: 'NO ONE', genre: 'AFRO BEAT • 100 BPM', icon: '🎤', file: 'music/3.mpeg' },
+    4: { name: 'TRANQUILLE', genre: 'AFRO • 100 BPM', icon: '💋', file: 'music/4.mpeg' },
+    5: { name: 'LOVE STORY', genre: 'DRILL • 140 BPM', icon: '💎', file: 'music/5.mpeg' },
+    6: { name: 'MA ROSE', genre: 'AFRO • 100 BPM', icon: '🎀', file: 'music/6.mpeg' },
+    7: { name: 'DIEU EST GRAND', genre: 'AFRO • 100 BPM', icon: '🎃', file: 'music/7.mpeg' },
+    8: { name: 'HAITIENNE', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/8.mp4' },
+    9: { name: 'SHORT', genre: 'AFRO • 100 BPM', icon: '🎈', file: 'music/9.mp4' },
+    10: { name: 'WILL I ARRIVE', genre: 'AFRO • 100 BPM', icon: '🎁', file: 'music/10.mp4' },
+    11: { name: 'BEAUTY', genre: 'AFRO • 100 BPM', icon: '🎗', file: 'music/11.mp4' },
+    12: { name: 'ALWAYS', genre: 'AFRO • 100 BPM', icon: '🎭', file: 'music/12.mp4' },
+    13: { name: 'DANY', genre: 'AFRO • 100 BPM', icon: '🎏', file: 'music/13.mpeg' },
+    14: { name: 'ECOLIER', genre: 'DRILL • 140 BPM', icon: '🥽', file: 'music/14.mp4' },
+    15: { name: 'HERITIER', genre: 'AFRO • 100 BPM', icon: '🥼', file: 'music/15.mpeg' },
+    16: { name: 'NICA', genre: 'AFRO • 100 BPM', icon: '🎄', file: 'music/16.mp4' },
+    17: { name: 'BLACK BOY', genre: 'AFRO • 100 BPM', icon: '👖', file: 'music/17.mp4' },
+    18: { name: 'AYOOO', genre: 'DRILL • 140 BPM', icon: '💗', file: 'music/19.mp4' },
+    19: { name: 'FEELING', genre: 'DRILL • 140 BPM', icon: '☮', file: 'music/20.ogg' },
+    20: { name: 'GREAT', genre: 'AFRO • 100 BPM', icon: '🎅', file: 'music/21.mp4' },
+    21: { name: 'CHILD', genre: 'AFRO • 100 BPM', icon: '👸', file: 'music/22.mp4' },
+    22: { name: 'NAVAROO', genre: 'AFRO • 100 BPM', icon: '😎', file: 'music/23.mp4' },
+    23: { name: 'I\'M SORRY', genre: 'DRILL • 140 BPM', icon: '🥰', file: 'music/25.mp4' },
+    24: { name: 'SILENCE', genre: 'AFRO • 100 BPM', icon: '🤐', file: 'music/26.mpeg' },
+    25: { name: 'PARIS', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/27.mp4' },
+    26: { name: 'VANESSA', genre: 'AFRO • 100 BPM', icon: '👩', file: 'music/28.mp4' },
+    27: { name: 'FORGIVE', genre: 'AFRO • 100 BPM', icon: '💟', file: 'music/29.mpeg' },
+    28: { name: 'LOVE STORY', genre: 'DRILL • 140 BPM', icon: '💖', file: 'music/30.mpeg' },
+    29: { name: 'TO NIGHT', genre: 'AFRO • 100 BPM', icon: '💿', file: 'music/31.mp4' },
+    30: { name: 'SOURRIRE', genre: 'AFRO • 100 BPM', icon: '✨', file: 'music/33.mp4' },
+    31: { name: 'PASSION 2', genre: 'AFRO • 100 BPM', icon: '🎭', file: 'music/34.mp4' },
+    32: { name: 'DOUCEUR', genre: 'AFRO • 100 BPM', icon: '🎨', file: 'music/35.mp4' },
+    33: { name: 'BROCKEN', genre: 'AFRO • 100 BPM', icon: '💔', file: 'music/37.mpeg' },
+    34: { name: 'MAMAN', genre: 'AFRO • 100 BPM', icon: '👰', file: 'music/38.mp4' },
+    35: { name: 'ALPHIE', genre: 'AFRO • 100 BPM', icon: '😏', file: 'music/39.mpeg' },
+    36: { name: 'MOONLIGHT', genre: 'DRILL • 140 BPM', icon: '😪', file: 'music/40.ogg' },
+    37: { name: 'MELISSA', genre: 'AFRO • 100 BPM', icon: '🥱', file: 'music/41.mpeg' },
+    38: { name: 'TASTE', genre: 'AFRO • 100 BPM', icon: '🎞', file: 'music/43.mp4' },
+    39: { name: 'LAST DANCE', genre: 'DRILL • 140 BPM', icon: '🥎', file: 'music/45.mpeg' },
+    40: { name: 'JOY', genre: 'DRILL • 140 BPM', icon: '👢', file: 'music/46.mpeg' },
+    41: { name: 'PLEASE', genre: 'DRILL • 140 BPM', icon: '🍚', file: 'music/47.ogg' },
+    42: { name: 'AMANDA', genre: 'AFRO • 100 BPM', icon: '🍗', file: 'music/48.mp4' },
+    43: { name: 'SOURRIRE', genre: 'AFRO • 100 BPM', icon: '💖', file: 'music/49.mp4' },
+    44: { name: 'MANIOK', genre: 'AFRO • 100 BPM', icon: '💌', file: 'music/50.mp4' },
+    45: { name: 'HEART BREAK', genre: 'AFRO • 100 BPM', icon: '💛', file: 'music/51.mpeg' },
+    46: { name: 'CAELLE', genre: 'AFRO • 100 BPM', icon: '💢', file: 'music/52.mpeg' },
+    47: { name: 'ANTIDOTE', genre: 'DRILL • 140 BPM', icon: '🤡', file: 'music/53.mp4' },
+    48: { name: 'SOLITUDE', genre: 'AFRO • 100 BPM', icon: '😥', file: 'music/54.mp4' },
+    49: { name: 'PENSEE', genre: 'AFRO • 100 BPM', icon: '🤔', file: 'music/55.mp4' },
+    50: { name: 'PRETTY GIRL', genre: 'AFRO • 100 BPM', icon: '😴', file: 'music/56.mp4' },
+    51: { name: 'TOGETHER', genre: 'AFRO • 100 BPM', icon: '🤘', file: 'music/57.mp4' },
+    52: { name: 'FOLLOW ME', genre: 'AFRO • 100 BPM', icon: '☢', file: 'music/58.mp4' },
+    53: { name: 'OUBLIE', genre: 'AFRO • 100 BPM', icon: '😎', file: 'music/59.mp4' },
+    54: { name: 'JOLIE MADAMME', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/60.mp4' },
+    55: { name: 'HAITIEN', genre: 'DRILL • 140 BPM', icon: '😍', file: 'music/61.mp4' },
+    56: { name: 'UNGRY', genre: 'AFRO • 100 BPM', icon: '😣', file: 'music/62.mpeg' },
+    57: { name: 'PRAYER', genre: 'DRILL • 140 BPM', icon: '👮‍♀️', file: 'music/63.mp4' },
+    58: { name: 'OMMEMA', genre: 'AFRO • 100 BPM', icon: '👳‍♂️', file: 'music/64.mp4' },
+    59: { name: 'FRIENDS', genre: 'AFRO • 100 BPM', icon: '👸', file: 'music/65.mp4' },
+    60: { name: 'SIWO', genre: 'AFRO • 100 BPM', icon: '🧨', file: 'music/66.mp4' },
+    61: { name: 'CRYING', genre: 'SAD • 100 BPM', icon: '😥', file: 'music/67.mp4' },
+    62: { name: 'CALME', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/68.mp4' },
+    63: { name: 'FAKE', genre: 'AFRO • 100 BPM', icon: '👨‍🦰', file: 'music/69.mp4' },
+    64: { name: 'TEAM7', genre: 'DRILL • 140 BPM', icon: '👨‍⚕️', file: 'music/70.mp4' },
+    65: { name: 'MOOD', genre: 'AFRO • 100 BPM', icon: '🕵️‍♀️', file: 'music/71.mp4' },
+    66: { name: 'DOUCE', genre: 'AFRO • 100 BPM', icon: '👠', file: 'music/72.mp4' },
+    67: { name: 'NAVAR💙💚', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/73.mpeg' },
+    68: { name: 'JUST DO IT', genre: 'AFRO • 100 BPM', icon: '🙆‍♂️', file: 'music/74.mp4' },
+    69: { name: 'NOBLE', genre: 'AFRO • 100 BPM', icon: '👧', file: 'music/75.mp4' },
+    70: { name: 'SYMBA', genre: 'AFRO • 100 BPM', icon: '🧜‍♂️', file: 'music/76.mp4' },
+    71: { name: 'NO ONE', genre: 'AFRO • 100 BPM', icon: '😌', file: 'music/77.mpeg' },
+    72: { name: 'KINISHAMA', genre: 'AFRO • 100 BPM', icon: '🥰', file: 'music/78.mp4' },
+    73: { name: 'ALPHIE', genre: 'AFRO • 100 BPM', icon: '😏', file: 'music/79.mpeg' },
+    74: { name: 'COME', genre: 'DRILL • 140 BPM', icon: '😫', file: 'music/80.mp4' },
+    75: { name: 'FOR YOU', genre: 'AFRO • 100 BPM', icon: '💞', file: 'music/81.mp4' },
+    76: { name: 'ELISABETH', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/82.mp4' }
+};
+
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
+
+function loadLikedBeats() {
+    const likes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
+    const likedBeatsList = document.getElementById('likedBeatsList');
+    const emptyState = document.getElementById('emptyState');
+    const statsBar = document.getElementById('statsBar');
+    const totalLiked = document.getElementById('totalLiked');
+    
+    const likedBeats = [];
+    Object.keys(likes).forEach(beatId => {
+        if (likes[beatId].liked && beatsData[beatId]) {
+            likedBeats.push({
+                id: beatId,
+                ...beatsData[beatId],
+                likedDate: likes[beatId].date || 'Récemment'
+            });
+        }
+    });
+
+    if (likedBeats.length === 0) {
+        emptyState.style.display = 'block';
+        likedBeatsList.innerHTML = '';
+        statsBar.style.display = 'none';
+    } else {
+        emptyState.style.display = 'none';
+        statsBar.style.display = 'flex';
+        totalLiked.textContent = likedBeats.length;
+
+        let html = '';
+        likedBeats.forEach((beat, index) => {
+            html += `
+                <div class="beat-item" style="animation-delay: ${index * 0.1}s">
+                    <div class="beat-icon">${beat.icon}</div>
+                    <div class="beat-info">
+                        <div class="beat-title">${beat.name}</div>
+                        <div class="beat-genre">${beat.genre}</div>
+                        <div class="beat-liked-date">Aimé ${beat.likedDate}</div>
+                    </div>
+                    <audio controls>
+                        <source src="${beat.file}" type="audio/mpeg">
+                    </audio>
+                    <div class="beat-actions">
+                        <button class="action-btn unlike-btn" onclick="unlikeBeat(${beat.id})">
+                            <span class="icon">💔</span>
+                            <span>Retirer</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        likedBeatsList.innerHTML = html;
+        
+        // KRITIK: Ajoute event listeners apre kreye audios yo
+        attachAudioListeners();
+    }
+}
+
+function unlikeBeat(beatId) {
+    if (confirm('Voulez-vous retirer ce beat de vos favoris?')) {
+        const likes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
+        if (likes[beatId]) {
+            likes[beatId].liked = false;
+            likes[beatId].count = Math.max(0, (likes[beatId].count || 1) - 1);
+            localStorage.setItem('danybeats_beat_likes', JSON.stringify(likes));
+        }
+        loadLikedBeats();
+    }
+}
+
+let currentPlayingIndex = 0;
+let allAudioElements = [];
+let isPlayingAll = false;
+
+function playAllBeats() {
+    const playAllBtn = document.getElementById('playAllBtn');
+    allAudioElements = Array.from(document.querySelectorAll('.beat-item audio'));
+    
+    if (allAudioElements.length === 0) {
+        alert('❌ Aucun beat à jouer!');
+        return;
+    }
+
+    if (isPlayingAll) {
+        stopAllBeats();
+        playAllBtn.innerHTML = '▶ Jouer Tout';
+        isPlayingAll = false;
+    } else {
+        playAllBtn.innerHTML = '⏸ Arrêter';
+        isPlayingAll = true;
+        currentPlayingIndex = 0;
+        playNextBeat();
+    }
+}
+
+function playNextBeat() {
+    if (!isPlayingAll || currentPlayingIndex >= allAudioElements.length) {
+        const playAllBtn = document.getElementById('playAllBtn');
+        if (playAllBtn) {
+            playAllBtn.innerHTML = '▶ Jouer Tout';
+        }
+        isPlayingAll = false;
+        currentPlayingIndex = 0;
+        return;
+    }
+
+    // Stop tout FIRST
+    allAudioElements.forEach(audio => {
+        audio.pause();
+    });
+
+    const currentAudio = allAudioElements[currentPlayingIndex];
+    currentAudio.play();
+
+    document.querySelectorAll('.beat-item').forEach((item, index) => {
+        if (index === currentPlayingIndex) {
+            item.style.background = 'linear-gradient(135deg, rgba(255,0,128,0.3), rgba(255,140,0,0.3))';
+            item.style.borderColor = '#ff0080';
+        } else {
+            item.style.background = 'linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1))';
+            item.style.borderColor = 'rgba(255,0,128,0.3)';
+        }
+    });
+
+    currentAudio.onended = () => {
+        if (isPlayingAll) {
+            currentPlayingIndex++;
+            playNextBeat();
+        }
+    };
+}
+
+function stopAllBeats() {
+    allAudioElements.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.onended = null;
+    });
+    
+    document.querySelectorAll('.beat-item').forEach(item => {
+        item.style.background = 'linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1))';
+        item.style.borderColor = 'rgba(255,0,128,0.3)';
+    });
+}
+
+// KRITIK: Fonksyon sa a fè sèlman yon audio ka jwe
+function attachAudioListeners() {
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.addEventListener('play', function() {
+            // Si "Jouer Tout" ap jwe epi ou klike sou yon lòt beat
+            if (isPlayingAll && this !== allAudioElements[currentPlayingIndex]) {
+                // Stop "Jouer Tout" mode
+                isPlayingAll = false;
+                const playAllBtn = document.getElementById('playAllBtn');
+                if (playAllBtn) {
+                    playAllBtn.innerHTML = '▶ Jouer Tout';
+                }
+            }
+            
+            // TOUJOU pause tout lòt audios
+            document.querySelectorAll('audio').forEach(otherAudio => {
+                if (otherAudio !== this) {
+                    otherAudio.pause();
+                }
+            });
+        });
+    });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    loadLikedBeats();
+});
+</script>
+</body>
+</html>
