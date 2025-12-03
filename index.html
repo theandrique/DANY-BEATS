@@ -444,6 +444,76 @@
             height: 100%;
             object-fit: cover;
         }
+        .play-all-homepage-btn {
+    padding: 18px 50px;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(255,0,128,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.play-all-homepage-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255,0,128,0.5);
+}
+
+.play-all-homepage-btn:active {
+    transform: translateY(-2px);
+}
+
+/* Animation kap jwe */
+.play-all-homepage-btn.playing {
+    animation: pulse-btn 1.5s ease-in-out infinite;
+    background: linear-gradient(135deg, #ff8c00, #ff0080);
+}
+
+.play-all-homepage-btn.playing .btn-icon {
+    animation: rotate-icon 2s linear infinite;
+}
+
+@keyframes pulse-btn {
+    0%, 100% {
+        box-shadow: 0 5px 20px rgba(255,0,128,0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 5px 40px rgba(255,0,128,0.7);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes rotate-icon {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Icon animation */
+.btn-icon {
+    font-size: 1.3em;
+    transition: transform 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .play-all-homepage-btn {
+        padding: 15px 35px;
+        font-size: 1em;
+    }
+}
 
         /* About Section */
         .about-content {
@@ -751,6 +821,7 @@
         }
     </style>
 </head>
+
 <body>
     <ul class="nav-links" id="navLinks">
     <li><a href="#home">Accueil</a></li>
@@ -772,6 +843,7 @@
                 <li><a href="#about">À Propos</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="pluggins.html">Pluggins & vst</a></li>
+                <li><a href="likes.html">Likes</a></li>
             </ul>
         </div>
     </nav>
@@ -799,6 +871,12 @@
         <button onclick="clearSearch()" class="clear-btn">✕</button>
     </div>
     <div id="searchResults" class="search-results"></div>
+</div>
+<div style="text-align: center; margin: 30px 0;">
+    <button class="play-all-homepage-btn" id="playAllHomepageBtn" onclick="playAllHomepageBeats()">
+        <span class="btn-icon">▶</span>
+        <span class="btn-text">Jouer Tous Les Beats</span>
+    </button>
 </div>
     <section id="beats">
        <div class="beat-item" data-beat-id="1">
@@ -1171,7 +1249,7 @@
                 <div class="beat-genre">DRILL • 140 BPM</div>
             </div>
             <audio controls>
-                <source src="music/20.ogg" type="audio/mpeg">
+                <source src="musiC/20.ogg" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(19)" id="like-btn-19">
@@ -2783,8 +2861,141 @@ window.addEventListener('DOMContentLoaded', displayComments);
         </div>
     </div>
 </div>
+<script>
+// ========== PLAY ALL BEATS SYSTEM ==========
+let isPlayingAll = false;
+let currentPlayingIndex = 0;
+let allAudioElements = [];
+let globalCurrentAudio = null;
+
+window.playAllHomepageBeats = function() {
+    const button = document.getElementById('playAllHomepageBtn');
+    const btnText = button.querySelector('.btn-text');
+    const btnIcon = button.querySelector('.btn-icon');
+    
+    if (isPlayingAll) {
+        // Stop all
+        stopAllBeats();
+        button.classList.remove('playing');
+        btnText.textContent = 'Jouer Tous Les Beats';
+        btnIcon.textContent = '▶';
+        isPlayingAll = false;
+        return;
+    }
+    
+    // Start playing all
+    isPlayingAll = true;
+    button.classList.add('playing');
+    btnText.textContent = 'Arrêter Tous';
+    btnIcon.textContent = '⏸';
+    
+    // Get all visible audio elements
+    allAudioElements = Array.from(document.querySelectorAll('.beat-item:not(.hidden) audio'));
+    
+    if (allAudioElements.length === 0) {
+        alert('Aucun beat disponible!');
+        stopAllBeats();
+        button.classList.remove('playing');
+        btnText.textContent = 'Jouer Tous Les Beats';
+        btnIcon.textContent = '▶';
+        isPlayingAll = false;
+        return;
+    }
+    
+    currentPlayingIndex = 0;
+    playNextBeat();
+}
+
+function playNextBeat() {
+    if (!isPlayingAll || currentPlayingIndex >= allAudioElements.length) {
+        // Finished
+        const button = document.getElementById('playAllHomepageBtn');
+        const btnText = button.querySelector('.btn-text');
+        const btnIcon = button.querySelector('.btn-icon');
+        
+        button.classList.remove('playing');
+        btnText.textContent = 'Jouer Tous Les Beats';
+        btnIcon.textContent = '▶';
+        isPlayingAll = false;
+        currentPlayingIndex = 0;
+        return;
+    }
+    
+    const currentAudio = allAudioElements[currentPlayingIndex];
+    
+    // Pause all others
+    allAudioElements.forEach(audio => {
+        if (audio !== currentAudio) {
+            audio.pause();
+        }
+    });
+    
+    // Play current
+    currentAudio.play().catch(err => {
+        console.log('Play error:', err);
+        currentPlayingIndex++;
+        playNextBeat();
+    });
+    
+    globalCurrentAudio = currentAudio;
+    
+    // Scroll to current beat
+    const beatItem = currentAudio.closest('.beat-item');
+    if (beatItem) {
+        beatItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        beatItem.classList.add('highlight');
+        setTimeout(() => beatItem.classList.remove('highlight'), 1000);
+    }
+    
+    // When ended, play next
+    currentAudio.onended = function() {
+        currentPlayingIndex++;
+        playNextBeat();
+    };
+}
+
+function stopAllBeats() {
+    allAudioElements.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.onended = null;
+    });
+    currentPlayingIndex = 0;
+    isPlayingAll = false;
+}
+
+// Ensure only one audio plays at a time
+document.addEventListener('DOMContentLoaded', function() {
+    const allAudios = document.querySelectorAll('audio');
+    
+    allAudios.forEach(audio => {
+        audio.addEventListener('play', function() {
+            // Stop auto-play if user manually plays
+            if (isPlayingAll && this !== allAudioElements[currentPlayingIndex]) {
+                const button = document.getElementById('playAllHomepageBtn');
+                const btnText = button.querySelector('.btn-text');
+                const btnIcon = button.querySelector('.btn-icon');
+                
+                button.classList.remove('playing');
+                btnText.textContent = 'Jouer Tous Les Beats';
+                btnIcon.textContent = '▶';
+                isPlayingAll = false;
+            }
+            
+            // Pause all other audios
+            allAudios.forEach(otherAudio => {
+                if (otherAudio !== this) {
+                    otherAudio.pause();
+                }
+            });
+            
+            globalCurrentAudio = this;
+        });
+    });
+});
+</script>
 </body>
-<script type="module">
+<script type="module">s
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
@@ -2806,6 +3017,6 @@ window.addEventListener('DOMContentLoaded', displayComments);
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  
 </script>
 </html>
-
