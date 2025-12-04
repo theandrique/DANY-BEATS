@@ -2654,26 +2654,53 @@ document.addEventListener('click', function(e) {
         closeCommentModal();
     }
 });
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
+       // ========== MOBILE MENU SYSTEM ==========
+// Ajoute sa nan <script> tag ou a
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    // Toggle menu visibility
+    navLinks.classList.toggle('active');
+    
+    // Change hamburger icon
+    if (navLinks.classList.contains('active')) {
+        menuToggle.innerHTML = '✕'; // Change to X when open
+    } else {
+        menuToggle.innerHTML = '☰'; // Back to hamburger when closed
+    }
+}
+
+// Close menu when clicking on a link
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const navLinksContainer = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            // Close menu on mobile
+            if (window.innerWidth <= 768) {
+                navLinksContainer.classList.remove('active');
+                menuToggle.innerHTML = '☰';
+            }
         });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const navLinksContainer = document.getElementById('navLinks');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        if (!nav.contains(e.target) && navLinksContainer.classList.contains('active')) {
+            navLinksContainer.classList.remove('active');
+            menuToggle.innerHTML = '☰';
+        }
+    });
+});
     </script>
     <script>
     function toggleMenu() {
@@ -3020,4 +3047,5 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </script>
 </html>
+
 
