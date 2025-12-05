@@ -831,20 +831,6 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="admin.html" style="opacity: 0.5;">🔐</a></li>  <!-- ← AJOUTE SA -->
 </ul>
-<!-- Hamburger button -->
-<button id="menu-toggle" class="menu-btn">
-  &#9776;
-</button>
-
-<!-- Hidden mobile menu, initially hidden -->
-<nav id="mobile-menu" class="mobile-menu">
-  <ul>
-    <li><a href="/accueil">Akèy</a></li>
-    <li><a href="/studio">Studio</a></li>
-    <li><a href="/beats">Beats</a></li>
-    <!-- Mete tout lòt opsyon header la isit la -->
-  </ul>
-</nav>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -2801,7 +2787,7 @@ function submitComment() {
     const userComment = document.getElementById('userComment').value.trim();
     
     if (!userName || !userComment) {
-        alert('⚠️ Tanpri ranpli non ou ak kòmantè a!');
+        alert('⚠️ Prieres remplir tous les champs obligatoires!');
         return;
     }
     
@@ -2836,11 +2822,11 @@ function sendEmailNotification(comment) {
     // Create mailto link
     const subject = encodeURIComponent('Nouveau commentaire sur  Dany Beats');
     const body = encodeURIComponent(
-        `Nouvo kòmantè:\n\n` +
-        `Non: ${comment.name}\n` +
-        `Email: ${comment.email || 'Pa bay'}\n` +
-        `Dat: ${comment.date}\n\n` +
-        `Kòmantè:\n${comment.text}`
+        `Nouveau commentaire:\n\n` +
+        `Nom: ${comment.name}\n` +
+        `Email: ${comment.email || 'Pas donné'}\n` +
+        `Date: ${comment.date}\n\n` +
+        `Commentaire:\n${comment.text}`
     );
     
     const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
@@ -2861,7 +2847,7 @@ function displayComments() {
     let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
     
     if (comments.length === 0) {
-        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Okenn kòmantè ankò. Ou ka premye moun!</p>';
+        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Aucun commentaire pour le moment. Soyez le premier!</p>';
         return;
     }
     
