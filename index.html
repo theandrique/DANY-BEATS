@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANY BEATS</title>
     <link rel="icon" type="image" href="image/téléchargement.jpeg">
@@ -461,7 +457,124 @@
     position: relative;
     overflow: hidden;
 }
+/* EASTER EGG STYLES */
+nav.secret-mode {
+    background: linear-gradient(135deg, rgba(255,0,128,0.3), rgba(255,140,0,0.3));
+    box-shadow: 0 0 30px rgba(255,0,128,0.5);
+    animation: glow 2s infinite;
+}
 
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,0,128,0.5); }
+    50% { box-shadow: 0 0 40px rgba(255,0,128,0.8); }
+}
+
+.logo {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.secret-counter {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,0,128,0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.secret-counter.show {
+    opacity: 1;
+    top: -25px;
+}
+
+.easter-egg-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.easter-egg-modal.show {
+    display: flex;
+    animation: fadeIn 0.5s;
+}
+
+.easter-egg-content {
+    background: linear-gradient(135deg, #1a0033, #330066);
+    border: 3px solid #ff0080;
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
+    max-width: 600px;
+    animation: slideUp 0.5s;
+}
+
+.easter-egg-content h2 {
+    font-size: 3em;
+    color: #ff0080;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255,0,128,0.8);
+}
+
+.easter-egg-content p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.close-easter-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.close-easter-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255,0,128,0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Mobile responsive pou Easter Egg */
+@media (max-width: 768px) {
+    .easter-egg-content {
+        padding: 30px;
+        margin: 20px;
+    }
+   
+    .easter-egg-content h2 {
+        font-size: 2em;
+    }
+}
 .play-all-homepage-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(255,0,128,0.5);
@@ -508,13 +621,82 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .play-all-homepage-btn {
-        padding: 15px 35px;
-        font-size: 1em;
-    }
+/* MOBILE MENU FIX - Ajoute sa anba .menu-toggle */
+.menu-toggle.active {
+    background: linear-gradient(135deg, #ff8c00, #ff0080);
 }
 
+/* MOBILE RESPONSIVE - Ranplase @media (max-width: 768px) ou a ak sa: */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3em;
+    }
+
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.98);
+        flex-direction: column;
+        padding: 30px;
+        gap: 20px;
+        border-top: 2px solid #ff0080;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    .nav-links.active {
+        display: flex;
+        max-height: 500px;
+        animation: slideDown 0.4s ease;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-links li {
+        text-align: center;
+        opacity: 0;
+        animation: fadeInItem 0.3s forwards;
+    }
+
+    .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.2s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.3s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.4s; }
+    .nav-links.active li:nth-child(5) { animation-delay: 0.5s; }
+    .nav-links.active li:nth-child(6) { animation-delay: 0.6s; }
+    .nav-links.active li:nth-child(7) { animation-delay: 0.7s; }
+
+    @keyframes fadeInItem {
+        to { opacity: 1; }
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 15px;
+        font-size: 1.2em;
+        border-bottom: 1px solid rgba(255,0,128,0.2);
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .beat-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+}
         /* About Section */
         .about-content {
             text-align: center;
@@ -823,19 +1005,11 @@
 </head>
 
 <body>
-    <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Accueil</a></li>
-    <li><a href="#beats">Beats</a></li>
-    <li><a href="#videos">Vidéos</a></li>
-    <li><a href="#about">À Propos</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="admin.html" style="opacity: 0.5;">🔐</a></li>  <!-- ← AJOUTE SA -->
-</ul>
-    <!-- Navigation -->
+       <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">🎵 DANY BEATS</div>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="logo" onclick="logoClick()">🎵 DANY BEATS</div>
+            <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Accueil</a></li>
                 <li><a href="#beats">Beats</a></li>
@@ -862,7 +1036,7 @@
     </section>
 
     <!-- Beats Section -->
-    
+   
      <!-- Search Bar -->
 <div class="search-container">
      <h2 id="beats" class="section-title">🔥 Mes Beats</h2>
@@ -1000,7 +1174,7 @@
             <span class="icon">💬</span>
             <span class="count" id="comment-count-6">0</span>
         </button>
-    </div> 
+    </div>
         </div>
               <div class="beat-item">
             <div class="beat-icon">🎃</div>
@@ -1249,7 +1423,7 @@
                 <div class="beat-genre">DRILL • 140 BPM</div>
             </div>
             <audio controls>
-                <source src="music/20.ogg" type="audio/mpeg">
+                <source src="musiC/20.ogg" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(19)" id="like-btn-19">
@@ -1458,7 +1632,7 @@
         </button>
         <button class="action-btn comment-btn" onclick="openCommentModal(29, 'TO NIGHT')">
             <span class="icon">💬</span>
-            <span class="count" id="comment-count-2">0</span>
+            <span class="count" id="comment-count-29">0</span>
         </button>
     </div>
         </div>
@@ -2159,7 +2333,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-70">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(70, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(70, 'TEAM7')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-70">0</span>
         </button>
@@ -2179,7 +2353,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-71">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(71, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(71, 'MOOD')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-71">0</span>
         </button>
@@ -2199,7 +2373,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-72">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(72, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(72, 'DOUCE')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-72">0</span>
         </button>
@@ -2219,7 +2393,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-73">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(73, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(73, 'NAVAR💙💚')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-73">0</span>
         </button>
@@ -2239,7 +2413,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-74">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(74, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(74, 'JUST DO IT')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-74">0</span>
         </button>
@@ -2259,7 +2433,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-75">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(75, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(75, 'NOBLE')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-75">0</span>
         </button>
@@ -2279,32 +2453,13 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-76">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(76, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(76, 'SYMBA')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-76">0</span>
         </button>
     </div>
         </div>
-       <div class="beat-item">
-            <div class="beat-icon">😌</div>
-            <div class="beat-info">
-                <div class="beat-title">NO ONE</div>
-                <div class="beat-genre">AFRO • 100 BPM</div>
-            </div>
-            <audio controls>
-                <source src="music/77.mpeg" type="audio/mpeg">
-            </audio>
-             <div class="beat-actions">
-        <button class="action-btn like-btn" onclick="toggleLikeBeat(77)" id="like-btn-77">
-            <span class="icon">❤️</span>
-            <span class="count" id="like-count-77">0</span>
-        </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(77, 'FATHER')">
-            <span class="icon">💬</span>
-            <span class="count" id="comment-count-77">0</span>
-        </button>
-    </div>
-        </div>
+               </div>
        <div class="beat-item">
             <div class="beat-icon">🥰</div>
             <div class="beat-info">
@@ -2319,7 +2474,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-78">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(78, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(78, 'KINISHAMA')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-78">0</span>
         </button>
@@ -2339,7 +2494,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-79">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(79, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(79, 'ALPHIE')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-79">0</span>
         </button>
@@ -2359,7 +2514,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-80">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(80, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(80, 'COME')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-80">0</span>
         </button>
@@ -2379,7 +2534,7 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-81">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(81, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(81, 'FOR YOU')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-81">0</span>
         </button>
@@ -2399,20 +2554,20 @@
             <span class="icon">❤️</span>
             <span class="count" id="like-count-82">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(82, 'FATHER')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(82, 'ELISABETH')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-82">0</span>
         </button>
     </div>
         </div>
-        <div class="beat-item">
-            <div class="beat-icon">🎶</div>
+          <div class="beat-item">
+            <div class="beat-icon">👱‍♀️</div>
             <div class="beat-info">
                 <div class="beat-title">THESA</div>
                 <div class="beat-genre">AFRO • 100 BPM</div>
             </div>
             <audio controls>
-                <source src="music/83.mpeg" type="audio/mpeg">
+                <source src="music/83.mp3" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(83)" id="like-btn-83">
@@ -2424,6 +2579,7 @@
             <span class="count" id="comment-count-83">0</span>
         </button>
     </div>
+        </div>
         </div>
     </section>
 
@@ -2471,7 +2627,7 @@
         <div class="comments-section">
             <h3 style="color: #ff0080; text-align: center; margin-bottom: 30px;">💬 Vous en pensez quoi?</h3>
             <p style="text-align: center; margin-bottom: 30px;">Laisse nous un commentaire pour connaitre votre avis!</p>
-            
+           
             <!-- Comment Form -->
             <div class="comment-form">
                 <input type="text" id="userName" placeholder="Votre nom *" required>
@@ -2522,11 +2678,11 @@ let beatLikes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
 function toggleLikeBeat(beatId) {
     const likeBtn = document.getElementById('like-btn-' + beatId);
     const likeCount = document.getElementById('like-count-' + beatId);
-    
+   
     if (!beatLikes[beatId]) {
         beatLikes[beatId] = { count: 0, liked: false };
     }
-    
+   
     if (beatLikes[beatId].liked) {
         beatLikes[beatId].count--;
         beatLikes[beatId].liked = false;
@@ -2536,7 +2692,7 @@ function toggleLikeBeat(beatId) {
         beatLikes[beatId].liked = true;
         likeBtn.classList.add('liked');
     }
-    
+   
     likeCount.textContent = beatLikes[beatId].count;
     localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
 }
@@ -2564,10 +2720,10 @@ let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) |
 function openCommentModal(beatId, beatName) {
     currentBeatId = beatId;
     currentBeatName = beatName;
-    
+   
     document.getElementById('modalTitle').textContent = `💬 Commenter: ${beatName}`;
     document.getElementById('commentModal').classList.add('show');
-    
+   
     loadBeatComments(beatId);
 }
 
@@ -2580,12 +2736,12 @@ function closeCommentModal() {
 function submitBeatComment() {
     const userName = document.getElementById('modalUserName').value.trim();
     const userComment = document.getElementById('modalUserComment').value.trim();
-    
+   
     if (!userName || !userComment) {
         alert('⚠️ Veuillez remplir tous les champs!');
         return;
     }
-    
+   
     const comment = {
         name: userName,
         text: userComment,
@@ -2593,35 +2749,35 @@ function submitBeatComment() {
         beatId: currentBeatId,
         beatName: currentBeatName
     };
-    
+   
     if (!beatComments[currentBeatId]) {
         beatComments[currentBeatId] = [];
     }
-    
+   
     beatComments[currentBeatId].unshift(comment);
     localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
-    
+   
     // Send email notification
     sendBeatCommentEmail(comment);
-    
+   
     loadBeatComments(currentBeatId);
     updateCommentCount(currentBeatId);
-    
+   
     document.getElementById('modalUserName').value = '';
     document.getElementById('modalUserComment').value = '';
-    
+   
     alert('✅ Merci! Votre commentaire a été ajouté!');
 }
 
 function loadBeatComments(beatId) {
     const commentsList = document.getElementById('beatCommentsList');
     const comments = beatComments[beatId] || [];
-    
+   
     if (comments.length === 0) {
         commentsList.innerHTML = '<p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>';
         return;
     }
-    
+   
     commentsList.innerHTML = comments.map(comment => `
         <div class="beat-comment-item">
             <div class="beat-comment-header">
@@ -2654,14 +2810,14 @@ function sendBeatCommentEmail(comment) {
         `Date: ${comment.date}\n\n` +
         `Commentaire:\n${comment.text}`
     );
-    
+   
     const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
-    
+   
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = mailtoLink;
     document.body.appendChild(iframe);
-    
+   
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 1000);
@@ -2674,57 +2830,30 @@ document.addEventListener('click', function(e) {
         closeCommentModal();
     }
 });
-       // ========== MOBILE MENU SYSTEM ==========
-// Ajoute sa nan <script> tag ou a
-
-function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    // Toggle menu visibility
-    navLinks.classList.toggle('active');
-    
-    // Change hamburger icon
-    if (navLinks.classList.contains('active')) {
-        menuToggle.innerHTML = '✕'; // Change to X when open
-    } else {
-        menuToggle.innerHTML = '☰'; // Back to hamburger when closed
-    }
-}
-
-// Close menu when clicking on a link
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            const navLinksContainer = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
-            
-            // Close menu on mobile
-            if (window.innerWidth <= 768) {
-                navLinksContainer.classList.remove('active');
-                menuToggle.innerHTML = '☰';
-            }
-        });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        const navLinksContainer = document.getElementById('navLinks');
-        const menuToggle = document.querySelector('.menu-toggle');
-        const nav = document.querySelector('nav');
-        
-        if (!nav.contains(e.target) && navLinksContainer.classList.contains('active')) {
-            navLinksContainer.classList.remove('active');
-            menuToggle.innerHTML = '☰';
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
         }
-    });
-});
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
     </script>
     <script>
     function toggleMenu() {
-        
+       
         // ... ou gen deja sa
     }
 // Search Beats Function
@@ -2734,21 +2863,21 @@ function searchBeats() {
     const clearBtn = document.querySelector('.clear-btn');
     const searchResults = document.getElementById('searchResults');
     const beatItems = document.querySelectorAll('.beat-item');
-    
+   
     let foundCount = 0;
-    
+   
     // Show/hide clear button
     if (filter.length > 0) {
         clearBtn.classList.add('show');
     } else {
         clearBtn.classList.remove('show');
     }
-    
+   
     // Filter beats
     beatItems.forEach(beat => {
         const title = beat.querySelector('.beat-title').textContent.toLowerCase();
         const genre = beat.querySelector('.beat-genre').textContent.toLowerCase();
-        
+       
         if (filter === '' || title.includes(filter) || genre.includes(filter)) {
             beat.classList.remove('hidden');
             beat.classList.add('highlight');
@@ -2758,7 +2887,7 @@ function searchBeats() {
             beat.classList.add('hidden');
         }
     });
-    
+   
     // Show results count
     if (filter.length > 0) {
         if (foundCount === 0) {
@@ -2778,11 +2907,11 @@ function clearSearch() {
     const clearBtn = document.querySelector('.clear-btn');
     const searchResults = document.getElementById('searchResults');
     const beatItems = document.querySelectorAll('.beat-item');
-    
+   
     input.value = '';
     clearBtn.classList.remove('show');
     searchResults.innerHTML = '';
-    
+   
     beatItems.forEach(beat => {
         beat.classList.remove('hidden');
     });
@@ -2805,12 +2934,12 @@ function submitComment() {
     const userName = document.getElementById('userName').value.trim();
     const userEmail = document.getElementById('userEmail').value.trim();
     const userComment = document.getElementById('userComment').value.trim();
-    
+   
     if (!userName || !userComment) {
-        alert('⚠️ Prieres remplir tous les champs obligatoires!');
+        alert('⚠️ Tanpri ranpli non ou ak kòmantè a!');
         return;
     }
-    
+   
     // Create comment object
     const comment = {
         name: userName,
@@ -2818,23 +2947,23 @@ function submitComment() {
         text: userComment,
         date: new Date().toLocaleString('fr-FR')
     };
-    
+   
     // Save to localStorage
     let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
     comments.unshift(comment); // Add to beginning
     localStorage.setItem('danybeats_comments', JSON.stringify(comments));
-    
+   
     // Send email notification to you
     sendEmailNotification(comment);
-    
+   
     // Display comment
     displayComments();
-    
+   
     // Clear form
     document.getElementById('userName').value = '';
     document.getElementById('userEmail').value = '';
     document.getElementById('userComment').value = '';
-    
+   
     alert('✅ Merci pour votre commentaire!');
 }
 
@@ -2842,21 +2971,21 @@ function sendEmailNotification(comment) {
     // Create mailto link
     const subject = encodeURIComponent('Nouveau commentaire sur  Dany Beats');
     const body = encodeURIComponent(
-        `Nouveau commentaire:\n\n` +
-        `Nom: ${comment.name}\n` +
-        `Email: ${comment.email || 'Pas donné'}\n` +
-        `Date: ${comment.date}\n\n` +
-        `Commentaire:\n${comment.text}`
+        `Nouvo kòmantè:\n\n` +
+        `Non: ${comment.name}\n` +
+        `Email: ${comment.email || 'Pa bay'}\n` +
+        `Dat: ${comment.date}\n\n` +
+        `Kòmantè:\n${comment.text}`
     );
-    
+   
     const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
-    
+   
     // Open email client (silent - won't interrupt user)
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = mailtoLink;
     document.body.appendChild(iframe);
-    
+   
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 1000);
@@ -2865,12 +2994,12 @@ function sendEmailNotification(comment) {
 function displayComments() {
     const commentsList = document.getElementById('commentsList');
     let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
-    
+   
     if (comments.length === 0) {
-        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Aucun commentaire pour le moment. Soyez le premier!</p>';
+        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Okenn kòmantè ankò. Ou ka premye moun!</p>';
         return;
     }
-    
+   
     commentsList.innerHTML = comments.map(comment => `
         <div class="comment-item">
             <div class="comment-header">
@@ -2898,7 +3027,7 @@ window.addEventListener('DOMContentLoaded', displayComments);
                 <textarea id="modalUserComment" placeholder="Votre commentaire sur ce beat... *" rows="4" required></textarea>
                 <button onclick="submitBeatComment()" class="submit-modal-btn">📤 Envoyer</button>
             </div>
-            
+           
             <div class="beat-comments-display">
                 <h4>Commentaires:</h4>
                 <div id="beatCommentsList">
@@ -2919,7 +3048,7 @@ window.playAllHomepageBeats = function() {
     const button = document.getElementById('playAllHomepageBtn');
     const btnText = button.querySelector('.btn-text');
     const btnIcon = button.querySelector('.btn-icon');
-    
+   
     if (isPlayingAll) {
         // Stop all
         stopAllBeats();
@@ -2929,16 +3058,16 @@ window.playAllHomepageBeats = function() {
         isPlayingAll = false;
         return;
     }
-    
+   
     // Start playing all
     isPlayingAll = true;
     button.classList.add('playing');
     btnText.textContent = 'Arrêter Tous';
     btnIcon.textContent = '⏸';
-    
+   
     // Get all visible audio elements
     allAudioElements = Array.from(document.querySelectorAll('.beat-item:not(.hidden) audio'));
-    
+   
     if (allAudioElements.length === 0) {
         alert('Aucun beat disponible!');
         stopAllBeats();
@@ -2948,7 +3077,7 @@ window.playAllHomepageBeats = function() {
         isPlayingAll = false;
         return;
     }
-    
+   
     currentPlayingIndex = 0;
     playNextBeat();
 }
@@ -2959,7 +3088,7 @@ function playNextBeat() {
         const button = document.getElementById('playAllHomepageBtn');
         const btnText = button.querySelector('.btn-text');
         const btnIcon = button.querySelector('.btn-icon');
-        
+       
         button.classList.remove('playing');
         btnText.textContent = 'Jouer Tous Les Beats';
         btnIcon.textContent = '▶';
@@ -2967,25 +3096,25 @@ function playNextBeat() {
         currentPlayingIndex = 0;
         return;
     }
-    
+   
     const currentAudio = allAudioElements[currentPlayingIndex];
-    
+   
     // Pause all others
     allAudioElements.forEach(audio => {
         if (audio !== currentAudio) {
             audio.pause();
         }
     });
-    
+   
     // Play current
     currentAudio.play().catch(err => {
         console.log('Play error:', err);
         currentPlayingIndex++;
         playNextBeat();
     });
-    
+   
     globalCurrentAudio = currentAudio;
-    
+   
     // Scroll to current beat
     const beatItem = currentAudio.closest('.beat-item');
     if (beatItem) {
@@ -2993,7 +3122,7 @@ function playNextBeat() {
         beatItem.classList.add('highlight');
         setTimeout(() => beatItem.classList.remove('highlight'), 1000);
     }
-    
+   
     // When ended, play next
     currentAudio.onended = function() {
         currentPlayingIndex++;
@@ -3014,7 +3143,7 @@ function stopAllBeats() {
 // Ensure only one audio plays at a time
 document.addEventListener('DOMContentLoaded', function() {
     const allAudios = document.querySelectorAll('audio');
-    
+   
     allAudios.forEach(audio => {
         audio.addEventListener('play', function() {
             // Stop auto-play if user manually plays
@@ -3022,20 +3151,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 const button = document.getElementById('playAllHomepageBtn');
                 const btnText = button.querySelector('.btn-text');
                 const btnIcon = button.querySelector('.btn-icon');
-                
+               
                 button.classList.remove('playing');
                 btnText.textContent = 'Jouer Tous Les Beats';
                 btnIcon.textContent = '▶';
                 isPlayingAll = false;
             }
-            
+           
             // Pause all other audios
             allAudios.forEach(otherAudio => {
                 if (otherAudio !== this) {
                     otherAudio.pause();
                 }
             });
-            
+           
             globalCurrentAudio = this;
         });
     });
@@ -3064,8 +3193,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  
+ 
 </script>
 </html>
-
-
