@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Likes - DANY BEATS</title>
-    <link rel="icon" type="image" href="image/téléchargement.jpeg">
     <style>
         * {
             margin: 0;
@@ -19,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -74,7 +72,6 @@
             cursor: pointer;
         }
 
-        /* Header */
         .header {
             padding: 150px 20px 60px;
             text-align: center;
@@ -100,14 +97,12 @@
             opacity: 0.8;
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 60px 20px;
         }
 
-        /* Stats Bar */
         .stats-bar {
             background: linear-gradient(135deg, rgba(255,0,128,0.2), rgba(255,140,0,0.2));
             border: 2px solid rgba(255,0,128,0.4);
@@ -139,7 +134,6 @@
             margin-top: 10px;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 100px 20px;
@@ -193,7 +187,6 @@
             box-shadow: 0 10px 30px rgba(255,0,128,0.5);
         }
 
-        /* Beat Item */
         .beat-item {
             background: linear-gradient(135deg, rgba(255,0,128,0.1), rgba(255,140,0,0.1));
             border: 2px solid rgba(255,0,128,0.3);
@@ -330,7 +323,6 @@
             box-shadow: 0 10px 30px rgba(255,0,128,0.5);
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 50px 20px;
@@ -355,7 +347,6 @@
             color: #ff0080;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5em;
@@ -403,7 +394,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo">❤️ MES LIKES</div>
@@ -417,15 +407,12 @@
         </div>
     </nav>
 
-    <!-- Header -->
     <div class="header">
         <h1>❤️ Mes Beats Préférés</h1>
         <p>Tous les beats que vous avez aimés</p>
     </div>
 
-    <!-- Content -->
     <div class="container">
-        <!-- Stats Bar -->
         <div class="stats-bar" id="statsBar" style="display: none;">
             <div class="stat-item">
                 <div class="stat-number" id="totalLiked">0</div>
@@ -437,15 +424,12 @@
             </div>
         </div>
 
-        <!-- Play All Button -->
         <div style="text-align: center;" id="playAllSection" style="display: none;">
             <button class="play-all-btn" id="playAllBtn" onclick="playAllBeats()">▶ Jouer Tout</button>
         </div>
 
-        <!-- Liked Beats List -->
         <div id="likedBeatsList"></div>
 
-        <!-- Empty State -->
         <div class="empty-state" id="emptyState">
             <div class="icon">💔</div>
             <h2>Aucun beat aimé pour le moment</h2>
@@ -454,7 +438,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="social-links">
             <a href="https://www.instagram.com/dany_beats/" target="_blank">Instagram</a>
@@ -462,11 +445,10 @@
             <a href="https://soundcloud.com/danybeats08" target="_blank">SoundCloud</a>
             <a href="https://open.spotify.com/user/31pphgmkwdpoquxdswri7x52uxgm" target="_blank">Spotify</a>
         </div>
-        <p>&copy; 2024 Dany Beats. Tous droits réservés.</p>
+        <p>&copy; 2025 Dany Beats. Tous droits réservés.</p>
     </footer>
 
     <script>
-// Base de données des beats
 const beatsData = {
     1: { name: 'SUNSET', genre: 'AFRO-POP • 100 BPM', icon: '🎹', file: 'music/1.mpeg' },
     2: { name: 'FATHER', genre: 'AFRO • 100 BPM', icon: '🎧', file: 'music/2.mpeg' },
@@ -507,44 +489,43 @@ const beatsData = {
     37: { name: 'MELISSA', genre: 'AFRO • 100 BPM', icon: '🥱', file: 'music/41.mpeg' },
     38: { name: 'TASTE', genre: 'AFRO • 100 BPM', icon: '🎞', file: 'music/43.mp4' },
     39: { name: 'LAST DANCE', genre: 'DRILL • 140 BPM', icon: '🥎', file: 'music/45.mpeg' },
-    40: { name: 'JOY', genre: 'DRILL • 140 BPM', icon: '👢', file: 'music/46.mpeg' },
-    41: { name: 'PLEASE', genre: 'DRILL • 140 BPM', icon: '🍚', file: 'music/47.ogg' },
-    42: { name: 'AMANDA', genre: 'AFRO • 100 BPM', icon: '🍗', file: 'music/48.mp4' },
-    43: { name: 'SOURRIRE', genre: 'AFRO • 100 BPM', icon: '💖', file: 'music/49.mp4' },
-    44: { name: 'MANIOK', genre: 'AFRO • 100 BPM', icon: '💌', file: 'music/50.mp4' },
-    45: { name: 'HEART BREAK', genre: 'AFRO • 100 BPM', icon: '💛', file: 'music/51.mpeg' },
-    46: { name: 'CAELLE', genre: 'AFRO • 100 BPM', icon: '💢', file: 'music/52.mpeg' },
-    47: { name: 'ANTIDOTE', genre: 'DRILL • 140 BPM', icon: '🤡', file: 'music/53.mp4' },
-    48: { name: 'SOLITUDE', genre: 'AFRO • 100 BPM', icon: '😥', file: 'music/54.mp4' },
-    49: { name: 'PENSEE', genre: 'AFRO • 100 BPM', icon: '🤔', file: 'music/55.mp4' },
-    50: { name: 'PRETTY GIRL', genre: 'AFRO • 100 BPM', icon: '😴', file: 'music/56.mp4' },
-    51: { name: 'TOGETHER', genre: 'AFRO • 100 BPM', icon: '🤘', file: 'music/57.mp4' },
-    52: { name: 'FOLLOW ME', genre: 'AFRO • 100 BPM', icon: '☢', file: 'music/58.mp4' },
-    53: { name: 'OUBLIE', genre: 'AFRO • 100 BPM', icon: '😎', file: 'music/59.mp4' },
-    54: { name: 'JOLIE MADAMME', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/60.mp4' },
-    55: { name: 'HAITIEN', genre: 'DRILL • 140 BPM', icon: '😍', file: 'music/61.mp4' },
-    56: { name: 'UNGRY', genre: 'AFRO • 100 BPM', icon: '😣', file: 'music/62.mpeg' },
-    57: { name: 'PRAYER', genre: 'DRILL • 140 BPM', icon: '👮‍♀️', file: 'music/63.mp4' },
-    58: { name: 'OMMEMA', genre: 'AFRO • 100 BPM', icon: '👳‍♂️', file: 'music/64.mp4' },
-    59: { name: 'FRIENDS', genre: 'AFRO • 100 BPM', icon: '👸', file: 'music/65.mp4' },
-    60: { name: 'SIWO', genre: 'AFRO • 100 BPM', icon: '🧨', file: 'music/66.mp4' },
-    61: { name: 'CRYING', genre: 'SAD • 100 BPM', icon: '😥', file: 'music/67.mp4' },
-    62: { name: 'CALME', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/68.mp4' },
-    63: { name: 'FAKE', genre: 'AFRO • 100 BPM', icon: '👨‍🦰', file: 'music/69.mp4' },
-    64: { name: 'TEAM7', genre: 'DRILL • 140 BPM', icon: '👨‍⚕️', file: 'music/70.mp4' },
-    65: { name: 'MOOD', genre: 'AFRO • 100 BPM', icon: '🕵️‍♀️', file: 'music/71.mp4' },
-    66: { name: 'DOUCE', genre: 'AFRO • 100 BPM', icon: '👠', file: 'music/72.mp4' },
-    67: { name: 'NAVAR💙💚', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/73.mpeg' },
-    68: { name: 'JUST DO IT', genre: 'AFRO • 100 BPM', icon: '🙆‍♂️', file: 'music/74.mp4' },
-    69: { name: 'NOBLE', genre: 'AFRO • 100 BPM', icon: '👧', file: 'music/75.mp4' },
-    70: { name: 'SYMBA', genre: 'AFRO • 100 BPM', icon: '🧜‍♂️', file: 'music/76.mp4' },
-    71: { name: 'NO ONE', genre: 'AFRO • 100 BPM', icon: '😌', file: 'music/77.mpeg' },
-    72: { name: 'KINISHAMA', genre: 'AFRO • 100 BPM', icon: '🥰', file: 'music/78.mp4' },
-    73: { name: 'ALPHIE', genre: 'AFRO • 100 BPM', icon: '😏', file: 'music/79.mpeg' },
-    74: { name: 'COME', genre: 'DRILL • 140 BPM', icon: '😫', file: 'music/80.mp4' },
-    75: { name: 'FOR YOU', genre: 'AFRO • 100 BPM', icon: '💞', file: 'music/81.mp4' },
-    76: { name: 'ELISABETH', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/82.mp4' },
-    77: { name: 'THESA', genre: 'AFRO • 100 BPM', icon: '🎶', file: 'music/83.mpeg' }
+    46: { name: 'JOY', genre: 'DRILL • 140 BPM', icon: '👢', file: 'music/46.mpeg' },
+    47: { name: 'PLEASE', genre: 'DRILL • 140 BPM', icon: '🍚', file: 'music/47.ogg' },
+    48: { name: 'AMANDA', genre: 'AFRO • 100 BPM', icon: '🍗', file: 'music/48.mp4' },
+    49: { name: 'SOURRIRE', genre: 'AFRO • 100 BPM', icon: '💖', file: 'music/49.mp4' },
+    50: { name: 'MANIOK', genre: 'AFRO • 100 BPM', icon: '💌', file: 'music/50.mp4' },
+    51: { name: 'HEART BREAK', genre: 'AFRO • 100 BPM', icon: '💛', file: 'music/51.mpeg' },
+    52: { name: 'CAELLE', genre: 'AFRO • 100 BPM', icon: '💢', file: 'music/52.mpeg' },
+    53: { name: 'ANTIDOTE', genre: 'DRILL • 140 BPM', icon: '🤡', file: 'music/53.mp4' },
+    54: { name: 'SOLITUDE', genre: 'AFRO • 100 BPM', icon: '😥', file: 'music/54.mp4' },
+    55: { name: 'PENSEE', genre: 'AFRO • 100 BPM', icon: '🤔', file: 'music/55.mp4' },
+    56: { name: 'PRETTY GIRL', genre: 'AFRO • 100 BPM', icon: '😴', file: 'music/56.mp4' },
+    57: { name: 'TOGETHER', genre: 'AFRO • 100 BPM', icon: '🤘', file: 'music/57.mp4' },
+    58: { name: 'FOLLOW ME', genre: 'AFRO • 100 BPM', icon: '☢', file: 'music/58.mp4' },
+    59: { name: 'OUBLIE', genre: 'AFRO • 100 BPM', icon: '😎', file: 'music/59.mp4' },
+    60: { name: 'JOLIE MADAMME', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/60.mp4' },
+    61: { name: 'HAITIEN', genre: 'DRILL • 140 BPM', icon: '😍', file: 'music/61.mp4' },
+    62: { name: 'UNGRY', genre: 'AFRO • 100 BPM', icon: '😣', file: 'music/62.mpeg' },
+    63: { name: 'PRAYER', genre: 'DRILL • 140 BPM', icon: '👮‍♀️', file: 'music/63.mp4' },
+    64: { name: 'OMMEMA', genre: 'AFRO • 100 BPM', icon: '👳‍♂️', file: 'music/64.mp4' },
+    65: { name: 'FRIENDS', genre: 'AFRO • 100 BPM', icon: '👸', file: 'music/65.mp4' },
+    66: { name: 'SIWO', genre: 'AFRO • 100 BPM', icon: '🧨', file: 'music/66.mp4' },
+    67: { name: 'CRYING', genre: 'SAD • 100 BPM', icon: '😥', file: 'music/67.mp4' },
+    68: { name: 'CALME', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/68.mp4' },
+    69: { name: 'FAKE', genre: 'AFRO • 100 BPM', icon: '👨‍🦰', file: 'music/69.mp4' },
+    70: { name: 'TEAM7', genre: 'DRILL • 140 BPM', icon: '👨‍⚕️', file: 'music/70.mp4' },
+    71: { name: 'MOOD', genre: 'AFRO • 100 BPM', icon: '🕵️‍♀️', file: 'music/71.mp4' },
+    72: { name: 'DOUCE', genre: 'AFRO • 100 BPM', icon: '👠', file: 'music/72.mp4' },
+    73: { name: 'NAVAR💙💚', genre: 'AFRO • 100 BPM', icon: '👑', file: 'music/73.mpeg' },
+    74: { name: 'JUST DO IT', genre: 'AFRO • 100 BPM', icon: '🙆‍♂️', file: 'music/74.mp4' },
+    75: { name: 'NOBLE', genre: 'AFRO • 100 BPM', icon: '👧', file: 'music/75.mp4' },
+    76: { name: 'SYMBA', genre: 'AFRO • 100 BPM', icon: '🧜‍♂️', file: 'music/76.mp4' },
+    78: { name: 'KINISHAMA', genre: 'AFRO • 100 BPM', icon: '🥰', file: 'music/78.mp4' },
+    79: { name: 'ALPHIE', genre: 'AFRO • 100 BPM', icon: '😏', file: 'music/79.mpeg' },
+    80: { name: 'COME', genre: 'DRILL • 140 BPM', icon: '😫', file: 'music/80.mp4' },
+    81: { name: 'FOR YOU', genre: 'AFRO • 100 BPM', icon: '💞', file: 'music/81.mp4' },
+    82: { name: 'ELISABETH', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/82.mp4' },
+    83: { name: 'THESA', genre: 'AFRO • 100 BPM', icon: '👱‍♀️', file: 'music/83.mp3' }
 };
 
 function toggleMenu() {
@@ -602,8 +583,6 @@ function loadLikedBeats() {
             `;
         });
         likedBeatsList.innerHTML = html;
-        
-        // KRITIK: Ajoute event listeners apre kreye audios yo
         attachAudioListeners();
     }
 }
@@ -656,7 +635,6 @@ function playNextBeat() {
         return;
     }
 
-    // Stop tout FIRST
     allAudioElements.forEach(audio => {
         audio.pause();
     });
@@ -695,13 +673,10 @@ function stopAllBeats() {
     });
 }
 
-// KRITIK: Fonksyon sa a fè sèlman yon audio ka jwe
 function attachAudioListeners() {
     document.querySelectorAll('audio').forEach(audio => {
         audio.addEventListener('play', function() {
-            // Si "Jouer Tout" ap jwe epi ou klike sou yon lòt beat
             if (isPlayingAll && this !== allAudioElements[currentPlayingIndex]) {
-                // Stop "Jouer Tout" mode
                 isPlayingAll = false;
                 const playAllBtn = document.getElementById('playAllBtn');
                 if (playAllBtn) {
@@ -709,7 +684,6 @@ function attachAudioListeners() {
                 }
             }
             
-            // TOUJOU pause tout lòt audios
             document.querySelectorAll('audio').forEach(otherAudio => {
                 if (otherAudio !== this) {
                     otherAudio.pause();
@@ -724,5 +698,4 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </body>
-
 </html>
