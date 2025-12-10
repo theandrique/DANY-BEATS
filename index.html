@@ -1,4 +1,8 @@
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANY BEATS</title>
     <link rel="icon" type="image" href="image/téléchargement.jpeg">
@@ -16,7 +20,106 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+/* Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    border: none;
+    color: white;
+    font-size: 1.8em;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
 
+.menu-toggle:hover {
+    transform: scale(1.1);
+}
+
+.menu-toggle.active {
+    background: linear-gradient(135deg, #ff8c00, #ff0080);
+    transform: rotate(90deg);
+}
+
+/* MOBILE RESPONSIVE - Replace your existing @media (max-width: 768px) */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3em;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.98);
+        flex-direction: column;
+        padding: 30px;
+        gap: 0;
+        border-top: 2px solid #ff0080;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    .nav-links.active {
+        display: flex;
+        max-height: 500px;
+        animation: slideDown 0.4s ease;
+    }
+
+    @keyframes slideDown {
+        from { 
+            opacity: 0; 
+            transform: translateY(-20px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+
+    .nav-links li {
+        text-align: center;
+        opacity: 0;
+        animation: fadeInItem 0.3s forwards;
+    }
+
+    .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.2s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.3s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.4s; }
+    .nav-links.active li:nth-child(5) { animation-delay: 0.5s; }
+    .nav-links.active li:nth-child(6) { animation-delay: 0.6s; }
+    .nav-links.active li:nth-child(7) { animation-delay: 0.7s; }
+
+    @keyframes fadeInItem {
+        to { opacity: 1; }
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 15px;
+        font-size: 1.2em;
+        border-bottom: 1px solid rgba(255,0,128,0.2);
+    }
+
+    .beat-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+}
         /* Navigation */
         nav {
             position: fixed;
@@ -570,7 +673,7 @@ nav.secret-mode {
         padding: 30px;
         margin: 20px;
     }
-   
+    
     .easter-egg-content h2 {
         font-size: 2em;
     }
@@ -1006,21 +1109,21 @@ nav.secret-mode {
 
 <body>
        <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo" onclick="logoClick()">🎵 DANY BEATS</div>
-            <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Accueil</a></li>
-                <li><a href="#beats">Beats</a></li>
-                <li><a href="#videos">Vidéos</a></li>
-                <li><a href="#about">À Propos</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="pluggins.html">Pluggins & vst</a></li>
-                <li><a href="likes.html">Likes</a></li>
-            </ul>
-        </div>
-    </nav>
+   <nav>
+    <div class="nav-container">
+        <div class="logo" onclick="logoClick()">🎵 DANY BEATS</div>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="closeMenu()">Accueil</a></li>
+            <li><a href="#beats" onclick="closeMenu()">Beats</a></li>
+            <li><a href="#videos" onclick="closeMenu()">Vidéos</a></li>
+            <li><a href="#about" onclick="closeMenu()">À Propos</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            <li><a href="pluggins.html" onclick="closeMenu()">Pluggins & vst</a></li>
+            <li><a href="likes.html" onclick="closeMenu()">Likes</a></li>
+        </ul>
+    </div>
+</nav>
 
     <!-- Hero Section avec Vidéo -->
     <section id="home" class="hero">
@@ -1036,7 +1139,7 @@ nav.secret-mode {
     </section>
 
     <!-- Beats Section -->
-   
+    
      <!-- Search Bar -->
 <div class="search-container">
      <h2 id="beats" class="section-title">🔥 Mes Beats</h2>
@@ -1174,7 +1277,7 @@ nav.secret-mode {
             <span class="icon">💬</span>
             <span class="count" id="comment-count-6">0</span>
         </button>
-    </div>
+    </div> 
         </div>
               <div class="beat-item">
             <div class="beat-icon">🎃</div>
@@ -1423,7 +1526,7 @@ nav.secret-mode {
                 <div class="beat-genre">DRILL • 140 BPM</div>
             </div>
             <audio controls>
-                <source src="musiC/20.ogg" type="audio/mpeg">
+                <source src="music/20.mpeg" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(19)" id="like-btn-19">
@@ -2563,18 +2666,18 @@ nav.secret-mode {
           <div class="beat-item">
             <div class="beat-icon">👱‍♀️</div>
             <div class="beat-info">
-                <div class="beat-title">SENSATION</div>
+                <div class="beat-title">THESA</div>
                 <div class="beat-genre">AFRO • 100 BPM</div>
             </div>
             <audio controls>
-                <source src="music/83.mpeg" type="audio/mpeg">
+                <source src="music/83.mp3" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(83)" id="like-btn-83">
             <span class="icon">❤️</span>
             <span class="count" id="like-count-83">0</span>
         </button>
-        <button class="action-btn comment-btn" onclick="openCommentModal(83, 'SENSATION')">
+        <button class="action-btn comment-btn" onclick="openCommentModal(83, 'THESA')">
             <span class="icon">💬</span>
             <span class="count" id="comment-count-83">0</span>
         </button>
@@ -2627,7 +2730,7 @@ nav.secret-mode {
         <div class="comments-section">
             <h3 style="color: #ff0080; text-align: center; margin-bottom: 30px;">💬 Vous en pensez quoi?</h3>
             <p style="text-align: center; margin-bottom: 30px;">Laisse nous un commentaire pour connaitre votre avis!</p>
-           
+            
             <!-- Comment Form -->
             <div class="comment-form">
                 <input type="text" id="userName" placeholder="Votre nom *" required>
@@ -2670,19 +2773,18 @@ nav.secret-mode {
         </div>
         <p>&copy; 2025 DANY BEATS. Tous droits réservés.</p>
     </footer>
-
-    <script>
-        // Beat Like System
+<script>
+// ========== BEAT LIKE SYSTEM ==========
 let beatLikes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
 
 function toggleLikeBeat(beatId) {
     const likeBtn = document.getElementById('like-btn-' + beatId);
     const likeCount = document.getElementById('like-count-' + beatId);
-   
+    
     if (!beatLikes[beatId]) {
         beatLikes[beatId] = { count: 0, liked: false };
     }
-   
+    
     if (beatLikes[beatId].liked) {
         beatLikes[beatId].count--;
         beatLikes[beatId].liked = false;
@@ -2692,27 +2794,36 @@ function toggleLikeBeat(beatId) {
         beatLikes[beatId].liked = true;
         likeBtn.classList.add('liked');
     }
-   
+    
     likeCount.textContent = beatLikes[beatId].count;
     localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
 }
 
-// Load likes on page load
-window.addEventListener('DOMContentLoaded', function() {
-    Object.keys(beatLikes).forEach(beatId => {
-        const likeCount = document.getElementById('like-count-' + beatId);
-        const likeBtn = document.getElementById('like-btn-' + beatId);
-        if (likeCount) {
-            likeCount.textContent = beatLikes[beatId].count;
-            if (beatLikes[beatId].liked) {
-                likeBtn.classList.add('liked');
-            }
-        }
-    });
-    loadAllCommentCounts();
-});
+// ========== MENU MOBILE SYSTEM ==========
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    navLinks.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+    
+    if (navLinks.classList.contains('active')) {
+        menuToggle.textContent = '✕';
+    } else {
+        menuToggle.textContent = '☰';
+    }
+}
 
-// Comment Modal System
+function closeMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    navLinks.classList.remove('active');
+    menuToggle.classList.remove('active');
+    menuToggle.textContent = '☰';
+}
+
+// ========== COMMENT MODAL SYSTEM ==========
 let currentBeatId = null;
 let currentBeatName = '';
 let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) || {};
@@ -2720,10 +2831,10 @@ let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) |
 function openCommentModal(beatId, beatName) {
     currentBeatId = beatId;
     currentBeatName = beatName;
-   
+    
     document.getElementById('modalTitle').textContent = `💬 Commenter: ${beatName}`;
     document.getElementById('commentModal').classList.add('show');
-   
+    
     loadBeatComments(beatId);
 }
 
@@ -2736,12 +2847,12 @@ function closeCommentModal() {
 function submitBeatComment() {
     const userName = document.getElementById('modalUserName').value.trim();
     const userComment = document.getElementById('modalUserComment').value.trim();
-   
+    
     if (!userName || !userComment) {
         alert('⚠️ Veuillez remplir tous les champs!');
         return;
     }
-   
+    
     const comment = {
         name: userName,
         text: userComment,
@@ -2749,35 +2860,33 @@ function submitBeatComment() {
         beatId: currentBeatId,
         beatName: currentBeatName
     };
-   
+    
     if (!beatComments[currentBeatId]) {
         beatComments[currentBeatId] = [];
     }
-   
+    
     beatComments[currentBeatId].unshift(comment);
     localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
-   
-    // Send email notification
+    
     sendBeatCommentEmail(comment);
-   
     loadBeatComments(currentBeatId);
     updateCommentCount(currentBeatId);
-   
+    
     document.getElementById('modalUserName').value = '';
     document.getElementById('modalUserComment').value = '';
-   
+    
     alert('✅ Merci! Votre commentaire a été ajouté!');
 }
 
 function loadBeatComments(beatId) {
     const commentsList = document.getElementById('beatCommentsList');
     const comments = beatComments[beatId] || [];
-   
+    
     if (comments.length === 0) {
         commentsList.innerHTML = '<p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>';
         return;
     }
-   
+    
     commentsList.innerHTML = comments.map(comment => `
         <div class="beat-comment-item">
             <div class="beat-comment-header">
@@ -2810,74 +2919,39 @@ function sendBeatCommentEmail(comment) {
         `Date: ${comment.date}\n\n` +
         `Commentaire:\n${comment.text}`
     );
-   
+    
     const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
-   
+    
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = mailtoLink;
     document.body.appendChild(iframe);
-   
+    
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 1000);
 }
 
-// Close modal when clicking outside
-document.addEventListener('click', function(e) {
-    const modal = document.getElementById('commentModal');
-    if (e.target === modal) {
-        closeCommentModal();
-    }
-});
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
-        });
-    </script>
-    <script>
-    function toggleMenu() {
-       
-        // ... ou gen deja sa
-    }
-// Search Beats Function
+// ========== SEARCH SYSTEM ==========
 function searchBeats() {
     const input = document.getElementById('searchInput');
     const filter = input.value.toLowerCase().trim();
     const clearBtn = document.querySelector('.clear-btn');
     const searchResults = document.getElementById('searchResults');
     const beatItems = document.querySelectorAll('.beat-item');
-   
+    
     let foundCount = 0;
-   
-    // Show/hide clear button
+    
     if (filter.length > 0) {
         clearBtn.classList.add('show');
     } else {
         clearBtn.classList.remove('show');
     }
-   
-    // Filter beats
+    
     beatItems.forEach(beat => {
         const title = beat.querySelector('.beat-title').textContent.toLowerCase();
         const genre = beat.querySelector('.beat-genre').textContent.toLowerCase();
-       
+        
         if (filter === '' || title.includes(filter) || genre.includes(filter)) {
             beat.classList.remove('hidden');
             beat.classList.add('highlight');
@@ -2887,15 +2961,12 @@ function searchBeats() {
             beat.classList.add('hidden');
         }
     });
-   
-    // Show results count
+    
     if (filter.length > 0) {
         if (foundCount === 0) {
-            searchResults.innerHTML = `❌ Aucun beat pour "${input.value}",Essaie avec un autre nom`;
-        } else if (foundCount === 1) {
-            searchResults.innerHTML = `✓ ${foundCount} music`;
+            searchResults.innerHTML = `❌ Aucun beat pour "${input.value}", Essaie avec un autre nom`;
         } else {
-            searchResults.innerHTML = `✓ ${foundCount} music`;
+            searchResults.innerHTML = `✓ ${foundCount} music${foundCount > 1 ? 's' : ''}`;
         }
     } else {
         searchResults.innerHTML = '';
@@ -2907,85 +2978,65 @@ function clearSearch() {
     const clearBtn = document.querySelector('.clear-btn');
     const searchResults = document.getElementById('searchResults');
     const beatItems = document.querySelectorAll('.beat-item');
-   
+    
     input.value = '';
     clearBtn.classList.remove('show');
     searchResults.innerHTML = '';
-   
+    
     beatItems.forEach(beat => {
         beat.classList.remove('hidden');
     });
 }
-    // ... smooth scroll code ou a ...
 
-    // AJOUTE SA LA ⬇️
-    let currentAudio = null;
-
-    document.querySelectorAll('audio').forEach(audio => {
-        audio.addEventListener('play', function() {
-            if (currentAudio && currentAudio !== this) {
-                currentAudio.pause();
-            }
-            currentAudio = this;
-        });
-    });
-    // Comments System with Email Notification
+// ========== GENERAL COMMENTS SYSTEM ==========
 function submitComment() {
     const userName = document.getElementById('userName').value.trim();
     const userEmail = document.getElementById('userEmail').value.trim();
     const userComment = document.getElementById('userComment').value.trim();
-   
+    
     if (!userName || !userComment) {
-        alert('⚠️ Tanpri ranpli non ou ak kòmantè a!');
+        alert('⚠️ Veuillez remplir tous les champs requis!');
         return;
     }
-   
-    // Create comment object
+    
     const comment = {
         name: userName,
         email: userEmail,
         text: userComment,
         date: new Date().toLocaleString('fr-FR')
     };
-   
-    // Save to localStorage
+    
     let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
-    comments.unshift(comment); // Add to beginning
+    comments.unshift(comment);
     localStorage.setItem('danybeats_comments', JSON.stringify(comments));
-   
-    // Send email notification to you
+    
     sendEmailNotification(comment);
-   
-    // Display comment
     displayComments();
-   
-    // Clear form
+    
     document.getElementById('userName').value = '';
     document.getElementById('userEmail').value = '';
     document.getElementById('userComment').value = '';
-   
+    
     alert('✅ Merci pour votre commentaire!');
 }
 
 function sendEmailNotification(comment) {
-    // Create mailto link
-    const subject = encodeURIComponent('Nouveau commentaire sur  Dany Beats');
+    const subject = encodeURIComponent('Nouveau commentaire sur Dany Beats');
     const body = encodeURIComponent(
-        `Nouvo kòmantè:\n\n` +
-        `Non: ${comment.name}\n` +
-        `Email: ${comment.email || 'Pa bay'}\n` +
-        `Dat: ${comment.date}\n\n` +
-        `Kòmantè:\n${comment.text}`
+        `Nouveau commentaire:\n\n` +
+        `Nom: ${comment.name}\n` +
+        `Email: ${comment.email || 'Non fourni'}\n` +
+        `Date: ${comment.date}\n\n` +
+        `Commentaire:\n${comment.text}`
     );
-   
+    
     const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
-   
-    // Open email client (silent - won't interrupt user)
+    
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = mailtoLink;
     document.body.appendChild(iframe);
-   
+    
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 1000);
@@ -2994,12 +3045,12 @@ function sendEmailNotification(comment) {
 function displayComments() {
     const commentsList = document.getElementById('commentsList');
     let comments = JSON.parse(localStorage.getItem('danybeats_comments')) || [];
-   
+    
     if (comments.length === 0) {
-        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Okenn kòmantè ankò. Ou ka premye moun!</p>';
+        commentsList.innerHTML = '<p style="opacity: 0.7; text-align: center;">Aucun commentaire pour le moment. Soyez le premier!</p>';
         return;
     }
-   
+    
     commentsList.innerHTML = comments.map(comment => `
         <div class="comment-item">
             <div class="comment-header">
@@ -3011,46 +3062,18 @@ function displayComments() {
     `).join('');
 }
 
-// Load comments when page loads
-window.addEventListener('DOMContentLoaded', displayComments);
-</script>
-<!-- Comment Modal -->
-<div id="commentModal" class="comment-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle">💬 Commenter: SUNSET</h3>
-            <button class="modal-close" onclick="closeCommentModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="comment-form-modal">
-                <input type="text" id="modalUserName" placeholder="Votre nom *" required>
-                <textarea id="modalUserComment" placeholder="Votre commentaire sur ce beat... *" rows="4" required></textarea>
-                <button onclick="submitBeatComment()" class="submit-modal-btn">📤 Envoyer</button>
-            </div>
-           
-            <div class="beat-comments-display">
-                <h4>Commentaires:</h4>
-                <div id="beatCommentsList">
-                    <p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
 // ========== PLAY ALL BEATS SYSTEM ==========
 let isPlayingAll = false;
 let currentPlayingIndex = 0;
 let allAudioElements = [];
 let globalCurrentAudio = null;
 
-window.playAllHomepageBeats = function() {
+function playAllHomepageBeats() {
     const button = document.getElementById('playAllHomepageBtn');
     const btnText = button.querySelector('.btn-text');
     const btnIcon = button.querySelector('.btn-icon');
-   
+    
     if (isPlayingAll) {
-        // Stop all
         stopAllBeats();
         button.classList.remove('playing');
         btnText.textContent = 'Jouer Tous Les Beats';
@@ -3058,16 +3081,14 @@ window.playAllHomepageBeats = function() {
         isPlayingAll = false;
         return;
     }
-   
-    // Start playing all
+    
     isPlayingAll = true;
     button.classList.add('playing');
     btnText.textContent = 'Arrêter Tous';
     btnIcon.textContent = '⏸';
-   
-    // Get all visible audio elements
+    
     allAudioElements = Array.from(document.querySelectorAll('.beat-item:not(.hidden) audio'));
-   
+    
     if (allAudioElements.length === 0) {
         alert('Aucun beat disponible!');
         stopAllBeats();
@@ -3077,18 +3098,17 @@ window.playAllHomepageBeats = function() {
         isPlayingAll = false;
         return;
     }
-   
+    
     currentPlayingIndex = 0;
     playNextBeat();
 }
 
 function playNextBeat() {
     if (!isPlayingAll || currentPlayingIndex >= allAudioElements.length) {
-        // Finished
         const button = document.getElementById('playAllHomepageBtn');
         const btnText = button.querySelector('.btn-text');
         const btnIcon = button.querySelector('.btn-icon');
-       
+        
         button.classList.remove('playing');
         btnText.textContent = 'Jouer Tous Les Beats';
         btnIcon.textContent = '▶';
@@ -3096,34 +3116,30 @@ function playNextBeat() {
         currentPlayingIndex = 0;
         return;
     }
-   
+    
     const currentAudio = allAudioElements[currentPlayingIndex];
-   
-    // Pause all others
+    
     allAudioElements.forEach(audio => {
         if (audio !== currentAudio) {
             audio.pause();
         }
     });
-   
-    // Play current
+    
     currentAudio.play().catch(err => {
         console.log('Play error:', err);
         currentPlayingIndex++;
         playNextBeat();
     });
-   
+    
     globalCurrentAudio = currentAudio;
-   
-    // Scroll to current beat
+    
     const beatItem = currentAudio.closest('.beat-item');
     if (beatItem) {
         beatItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         beatItem.classList.add('highlight');
         setTimeout(() => beatItem.classList.remove('highlight'), 1000);
     }
-   
-    // When ended, play next
+    
     currentAudio.onended = function() {
         currentPlayingIndex++;
         playNextBeat();
@@ -3140,61 +3156,82 @@ function stopAllBeats() {
     isPlayingAll = false;
 }
 
-// Ensure only one audio plays at a time
-document.addEventListener('DOMContentLoaded', function() {
+// ========== EVENT LISTENERS ==========
+window.addEventListener('DOMContentLoaded', function() {
+    // Load likes
+    Object.keys(beatLikes).forEach(beatId => {
+        const likeCount = document.getElementById('like-count-' + beatId);
+        const likeBtn = document.getElementById('like-btn-' + beatId);
+        if (likeCount) {
+            likeCount.textContent = beatLikes[beatId].count;
+            if (beatLikes[beatId].liked) {
+                likeBtn.classList.add('liked');
+            }
+        }
+    });
+    
+    // Load comment counts
+    loadAllCommentCounts();
+    
+    // Load general comments
+    displayComments();
+    
+    // Audio control
     const allAudios = document.querySelectorAll('audio');
-   
     allAudios.forEach(audio => {
         audio.addEventListener('play', function() {
-            // Stop auto-play if user manually plays
             if (isPlayingAll && this !== allAudioElements[currentPlayingIndex]) {
                 const button = document.getElementById('playAllHomepageBtn');
                 const btnText = button.querySelector('.btn-text');
                 const btnIcon = button.querySelector('.btn-icon');
-               
+                
                 button.classList.remove('playing');
                 btnText.textContent = 'Jouer Tous Les Beats';
                 btnIcon.textContent = '▶';
                 isPlayingAll = false;
             }
-           
-            // Pause all other audios
+            
             allAudios.forEach(otherAudio => {
                 if (otherAudio !== this) {
                     otherAudio.pause();
                 }
             });
-           
+            
             globalCurrentAudio = this;
         });
     });
 });
-</script>
-</body>
-<script type="module">s
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAq-AOKPL6vdMa9GtjF8mqaD3aIaxO2YT0",
-    authDomain: "danybeats-a26c8.firebaseapp.com",
-    projectId: "danybeats-a26c8",
-    storageBucket: "danybeats-a26c8.firebasestorage.app",
-    messagingSenderId: "454390414582",
-    appId: "1:454390414582:web:1a2685bc2fa5f5431a00d7",
-    measurementId: "G-WXF2N1Z181"
-  };
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navLinks = document.getElementById('navLinks');
+    const nav = document.querySelector('nav');
+    
+    if (nav && !nav.contains(event.target) && navLinks && navLinks.classList.contains('active')) {
+        closeMenu();
+    }
+});
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
- 
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('commentModal');
+    if (e.target === modal) {
+        closeCommentModal();
+    }
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 </script>
 </html>
-
-
