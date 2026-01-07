@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-       
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANY BEATS</title>
@@ -2670,7 +2670,7 @@ nav.secret-mode {
                 <div class="beat-genre">AFRO • 100 BPM</div>
             </div>
             <audio controls>
-                <source src="music/83.mpeg" type="audio/mpeg">
+                <source src="music/83.mp3" type="audio/mpeg">
             </audio>
              <div class="beat-actions">
         <button class="action-btn like-btn" onclick="toggleLikeBeat(83)" id="like-btn-83">
@@ -3235,4 +3235,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 </script>
 </html>
+<!-- Comment Modal -->
+<div class="comment-modal" id="commentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">💬 Commenter ce Beat</h3>
+            <button class="modal-close" onclick="closeCommentModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <!-- Comment Form -->
+            <div class="comment-form-modal">
+                <input type="text" id="modalUserName" placeholder="Votre nom *" required>
+                <textarea id="modalUserComment" placeholder="Votre commentaire... *" rows="4" required></textarea>
+                <button onclick="submitBeatComment()" class="submit-modal-btn">📤 Envoyer</button>
+            </div>
+            
+            <!-- Beat Comments Display -->
+            <div class="beat-comments-display">
+                <h4>💬 Commentaires:</h4>
+                <div id="beatCommentsList">
+                    <p style="opacity: 0.6; text-align: center;">Aucun commentaire</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+// ... tout lòt script ou yo ...
