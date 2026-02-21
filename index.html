@@ -2775,26 +2775,71 @@ nav.secret-mode {
     </footer>
 <script>
 // ========== BEAT LIKE SYSTEM ==========
+const API_BASE = window.DANYBEATS_API_BASE || 'http://localhost:4000/api';
+const SESSION_KEY = 'danybeats_session_id';
 let beatLikes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
+let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) || {};
 
-function toggleLikeBeat(beatId) {
+function getSessionId() {
+    let sessionId = localStorage.getItem(SESSION_KEY);
+    if (!sessionId) {
+        sessionId = `guest-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+        localStorage.setItem(SESSION_KEY, sessionId);
+    }
+    return sessionId;
+}
+
+function escapeHtml(text) {
+    return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+function mapServerComment(comment) {
+    return {
+        name: comment.authorName,
+        text: comment.text,
+        date: new Date(comment.createdAt).toLocaleString('fr-FR')
+    };
+}
+
+async function fetchJson(url, options) {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error(`Erreur API: ${response.status}`);
+    }
+    return response.json();
+}
+
+async function toggleLikeBeat(beatId) {
     const likeBtn = document.getElementById('like-btn-' + beatId);
     const likeCount = document.getElementById('like-count-' + beatId);
-    
+
     if (!beatLikes[beatId]) {
         beatLikes[beatId] = { count: 0, liked: false };
     }
-    
-    if (beatLikes[beatId].liked) {
-        beatLikes[beatId].count--;
-        beatLikes[beatId].liked = false;
-        likeBtn.classList.remove('liked');
-    } else {
-        beatLikes[beatId].count++;
-        beatLikes[beatId].liked = true;
-        likeBtn.classList.add('liked');
+
+    const nextLiked = !beatLikes[beatId].liked;
+
+    try {
+        const payload = await fetchJson(`${API_BASE}/beats/${beatId}/likes`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId: getSessionId(), liked: nextLiked })
+        });
+
+        beatLikes[beatId].liked = payload.liked;
+        beatLikes[beatId].count = payload.likes;
+    } catch (error) {
+        console.warn('API likes indisponible, fallback localStorage:', error.message);
+        beatLikes[beatId].liked = nextLiked;
+        beatLikes[beatId].count = Math.max(0, (beatLikes[beatId].count || 0) + (nextLiked ? 1 : -1));
     }
-    
+
+    likeBtn.classList.toggle('liked', beatLikes[beatId].liked);
     likeCount.textContent = beatLikes[beatId].count;
     localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
 }
@@ -2826,7 +2871,6 @@ function closeMenu() {
 // ========== COMMENT MODAL SYSTEM ==========
 let currentBeatId = null;
 let currentBeatName = '';
-let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) || {};
 
 function openCommentModal(beatId, beatName) {
     currentBeatId = beatId;
@@ -2844,15 +2888,15 @@ function closeCommentModal() {
     document.getElementById('modalUserComment').value = '';
 }
 
-function submitBeatComment() {
+async function submitBeatComment() {
     const userName = document.getElementById('modalUserName').value.trim();
     const userComment = document.getElementById('modalUserComment').value.trim();
-    
+
     if (!userName || !userComment) {
         alert('⚠️ Veuillez remplir tous les champs!');
         return;
     }
-    
+
     const comment = {
         name: userName,
         text: userComment,
@@ -2860,55 +2904,129 @@ function submitBeatComment() {
         beatId: currentBeatId,
         beatName: currentBeatName
     };
-    
+
     if (!beatComments[currentBeatId]) {
         beatComments[currentBeatId] = [];
     }
-    
-    beatComments[currentBeatId].unshift(comment);
-    localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
-    
+
+    try {
+        await fetchJson(`${API_BASE}/beats/${currentBeatId}/comments`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: getSessionId(),
+                authorName: userName,
+                text: userComment
+            })
+        });
+        await loadBeatComments(currentBeatId);
+    } catch (error) {
+        console.warn('API commentaires indisponible, fallback localStorage:', error.message);
+        beatComments[currentBeatId].unshift(comment);
+        localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
+        renderBeatComments(beatComments[currentBeatId]);
+    }
+
     sendBeatCommentEmail(comment);
-    loadBeatComments(currentBeatId);
-    updateCommentCount(currentBeatId);
-    
+    await updateCommentCount(currentBeatId);
+
     document.getElementById('modalUserName').value = '';
     document.getElementById('modalUserComment').value = '';
-    
+
     alert('✅ Merci! Votre commentaire a été ajouté!');
 }
 
-function loadBeatComments(beatId) {
+function renderBeatComments(comments) {
     const commentsList = document.getElementById('beatCommentsList');
-    const comments = beatComments[beatId] || [];
-    
-    if (comments.length === 0) {
+
+    if (!comments || comments.length === 0) {
         commentsList.innerHTML = '<p style="opacity: 0.6; text-align: center;">Aucun commentaire. Soyez le premier!</p>';
         return;
     }
-    
+
     commentsList.innerHTML = comments.map(comment => `
         <div class="beat-comment-item">
             <div class="beat-comment-header">
-                <span class="beat-comment-author">👤 ${comment.name}</span>
-                <span class="beat-comment-date">${comment.date}</span>
+                <span class="beat-comment-author">👤 ${escapeHtml(comment.name)}</span>
+                <span class="beat-comment-date">${escapeHtml(comment.date)}</span>
             </div>
-            <div class="beat-comment-text">${comment.text}</div>
+            <div class="beat-comment-text">${escapeHtml(comment.text)}</div>
         </div>
     `).join('');
 }
 
-function updateCommentCount(beatId) {
+async function loadBeatComments(beatId) {
+    try {
+        const payload = await fetchJson(`${API_BASE}/beats/${beatId}/comments?limit=50&offset=0`);
+        beatComments[beatId] = payload.comments.map(mapServerComment);
+        localStorage.setItem('danybeats_beat_comments', JSON.stringify(beatComments));
+    } catch (error) {
+        console.warn('API commentaires indisponible, lecture locale:', error.message);
+        beatComments[beatId] = beatComments[beatId] || [];
+    }
+
+    renderBeatComments(beatComments[beatId]);
+}
+
+async function updateCommentCount(beatId) {
     const countEl = document.getElementById('comment-count-' + beatId);
-    if (countEl && beatComments[beatId]) {
-        countEl.textContent = beatComments[beatId].length;
+    if (!countEl) {
+        return;
+    }
+
+    try {
+        const payload = await fetchJson(`${API_BASE}/beats/${beatId}/stats`);
+        countEl.textContent = payload.comments;
+
+        if (!beatLikes[beatId]) {
+            beatLikes[beatId] = { count: payload.likes, liked: false };
+        } else {
+            beatLikes[beatId].count = payload.likes;
+        }
+
+        const likeCountEl = document.getElementById('like-count-' + beatId);
+        if (likeCountEl) {
+            likeCountEl.textContent = payload.likes;
+        }
+    } catch (error) {
+        countEl.textContent = (beatComments[beatId] || []).length;
     }
 }
 
-function loadAllCommentCounts() {
-    Object.keys(beatComments).forEach(beatId => {
-        updateCommentCount(beatId);
-    });
+async function loadAllCommentCounts() {
+    const likeCountNodes = document.querySelectorAll('[id^="like-count-"]');
+
+    await Promise.all(Array.from(likeCountNodes).map(async node => {
+        const beatId = node.id.replace('like-count-', '');
+        const likeBtn = document.getElementById('like-btn-' + beatId);
+
+        if (!beatLikes[beatId]) {
+            beatLikes[beatId] = { count: 0, liked: false };
+        }
+
+        try {
+            const payload = await fetchJson(`${API_BASE}/beats/${beatId}/stats`);
+            beatLikes[beatId].count = payload.likes;
+            node.textContent = payload.likes;
+
+            const commentEl = document.getElementById('comment-count-' + beatId);
+            if (commentEl) {
+                commentEl.textContent = payload.comments;
+            }
+        } catch (error) {
+            node.textContent = beatLikes[beatId].count || 0;
+            const commentEl = document.getElementById('comment-count-' + beatId);
+            if (commentEl) {
+                commentEl.textContent = (beatComments[beatId] || []).length;
+            }
+        }
+
+        if (likeBtn) {
+            likeBtn.classList.toggle('liked', !!beatLikes[beatId].liked);
+        }
+    }));
+
+    localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
 }
 
 function sendBeatCommentEmail(comment) {
@@ -3157,22 +3275,9 @@ function stopAllBeats() {
 }
 
 // ========== EVENT LISTENERS ==========
-window.addEventListener('DOMContentLoaded', function() {
-    // Load likes
-    Object.keys(beatLikes).forEach(beatId => {
-        const likeCount = document.getElementById('like-count-' + beatId);
-        const likeBtn = document.getElementById('like-btn-' + beatId);
-        if (likeCount) {
-            likeCount.textContent = beatLikes[beatId].count;
-            if (beatLikes[beatId].liked) {
-                likeBtn.classList.add('liked');
-            }
-        }
-    });
-    
-    // Load comment counts
-    loadAllCommentCounts();
-    
+window.addEventListener('DOMContentLoaded', async function() {
+    await loadAllCommentCounts();
+
     // Load general comments
     displayComments();
     
