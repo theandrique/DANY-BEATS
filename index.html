@@ -1137,6 +1137,7 @@ nav.secret-mode {
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -3332,9 +3333,12 @@ function stopAllBeats() {
 
 async function downloadAllBeats() {
     const button = document.getElementById('downloadAllBtn');
+    if (!button || button.disabled) {
+        return;
+    }
+
     const btnText = button.querySelector('.btn-text');
     const sourceNodes = Array.from(document.querySelectorAll('.beat-item audio source'));
-
     const files = sourceNodes
         .map(node => node.getAttribute('src'))
         .filter(src => typeof src === 'string' && src.trim().length > 0);
@@ -3344,22 +3348,58 @@ async function downloadAllBeats() {
         return;
     }
 
-    button.classList.add('downloading');
-    btnText.textContent = 'Téléchargement en cours...';
+    if (typeof JSZip === 'undefined') {
+        alert("⚠️ Le module ZIP n'est pas chargé. Recharge la page puis réessaie.");
+        return;
+    }
 
-    for (let i = 0; i < files.length; i++) {
+    button.disabled = true;
+    button.classList.add('downloading');
+    btnText.textContent = 'Création du ZIP...';
+
+    try {
+        const zip = new JSZip();
+
+        for (let i = 0; i < files.length; i++) {
+            const fileUrl = files[i];
+            const fileName = fileUrl.split('/').pop() || `beat-${i + 1}.mp3`;
+            btnText.textContent = `Ajout ${i + 1}/${files.length}...`;
+
+            const response = await fetch(fileUrl);
+            if (!response.ok) {
+                throw new Error(`Impossible de télécharger ${fileName}`);
+            }
+
+            const blob = await response.blob();
+            zip.file(fileName, blob);
+        }
+
+        btnText.textContent = 'Finalisation...';
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+
         const link = document.createElement('a');
-        link.href = files[i];
-        link.download = files[i].split('/').pop();
-        link.style.display = 'none';
+        const url = URL.createObjectURL(zipBlob);
+        const dateTag = new Date().toISOString().slice(0, 10);
+
+        link.href = url;
+        link.download = `dany-beats-${dateTag}.zip`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        await new Promise(resolve => setTimeout(resolve, 120));
-    }
+        URL.revokeObjectURL(url);
 
-    btnText.textContent = 'Télécharger Tous Les Beats';
-    button.classList.remove('downloading');
+        btnText.textContent = 'ZIP téléchargé ✅';
+        setTimeout(() => {
+            btnText.textContent = 'Télécharger Tous Les Beats';
+        }, 1800);
+    } catch (error) {
+        console.error(error);
+        alert('❌ Erreur pendant la création du ZIP. Vérifie ta connexion et réessaie.');
+        btnText.textContent = 'Télécharger Tous Les Beats';
+    } finally {
+        button.disabled = false;
+        button.classList.remove('downloading');
+    }
 }
 
 // ========== EVENT LISTENERS ==========
