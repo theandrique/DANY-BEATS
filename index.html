@@ -543,7 +543,7 @@
             height: 100%;
             object-fit: cover;
         }
-        .play-all-homepage-btn {
+.play-all-homepage-btn {
     padding: 18px 50px;
     background: linear-gradient(135deg, #ff0080, #ff8c00);
     color: white;
@@ -559,6 +559,16 @@
     gap: 12px;
     position: relative;
     overflow: hidden;
+}
+
+.download-all-btn {
+    margin-left: 12px;
+    background: linear-gradient(135deg, #00c853, #64dd17);
+    box-shadow: 0 5px 20px rgba(0, 200, 83, 0.3);
+}
+
+.download-all-btn:hover {
+    box-shadow: 0 10px 30px rgba(0, 200, 83, 0.5);
 }
 /* EASTER EGG STYLES */
 nav.secret-mode {
@@ -1153,6 +1163,10 @@ nav.secret-mode {
     <button class="play-all-homepage-btn" id="playAllHomepageBtn" onclick="playAllHomepageBeats()">
         <span class="btn-icon">▶</span>
         <span class="btn-text">Jouer Tous Les Beats</span>
+    </button>
+    <button class="play-all-homepage-btn download-all-btn" id="downloadAllBeatsBtn" onclick="downloadAllBeats()">
+        <span class="btn-icon">⬇</span>
+        <span class="btn-text">Télécharger Tous Les Beats</span>
     </button>
 </div>
     <section id="beats">
@@ -3272,6 +3286,30 @@ function stopAllBeats() {
     });
     currentPlayingIndex = 0;
     isPlayingAll = false;
+}
+
+function downloadAllBeats() {
+    const beatSources = Array.from(document.querySelectorAll('.beat-item audio source'))
+        .map(source => source.getAttribute('src'))
+        .filter(Boolean);
+
+    const uniqueSources = [...new Set(beatSources)];
+
+    if (uniqueSources.length === 0) {
+        alert('Aucun beat à télécharger pour le moment.');
+        return;
+    }
+
+    uniqueSources.forEach((source, index) => {
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = source;
+            link.download = source.split('/').pop() || `beat-${index + 1}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }, index * 250);
+    });
 }
 
 // ========== EVENT LISTENERS ==========
