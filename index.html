@@ -683,6 +683,38 @@ nav.secret-mode {
     box-shadow: 0 10px 30px rgba(255,0,128,0.5);
 }
 
+.download-all-btn {
+    margin-left: 14px;
+    padding: 18px 36px;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #ff0080;
+    border-radius: 50px;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.download-all-btn:hover {
+    background: rgba(255, 0, 128, 0.2);
+    transform: translateY(-3px);
+}
+
+.download-all-btn.downloading {
+    border-color: #ff8c00;
+    background: rgba(255, 140, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .download-all-btn {
+        margin-left: 0;
+        margin-top: 12px;
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
 .play-all-homepage-btn:active {
     transform: translateY(-2px);
 }
@@ -1105,6 +1137,7 @@ nav.secret-mode {
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -1153,6 +1186,10 @@ nav.secret-mode {
     <button class="play-all-homepage-btn" id="playAllHomepageBtn" onclick="playAllHomepageBeats()">
         <span class="btn-icon">▶</span>
         <span class="btn-text">Jouer Tous Les Beats</span>
+    </button>
+    <button class="download-all-btn" id="downloadAllBtn" onclick="downloadAllBeats()">
+        <span class="btn-icon">⬇️</span>
+        <span class="btn-text">Télécharger Tous Les Beats</span>
     </button>
 </div>
     <section id="beats">
@@ -2818,6 +2855,12 @@ async function toggleLikeBeat(beatId) {
     const likeBtn = document.getElementById('like-btn-' + beatId);
     const likeCount = document.getElementById('like-count-' + beatId);
 
+    if (!likeBtn || !likeCount || likeBtn.disabled) {
+        return;
+    }
+
+    likeBtn.disabled = true;
+
     if (!beatLikes[beatId]) {
         beatLikes[beatId] = { count: 0, liked: false };
     }
@@ -2842,6 +2885,7 @@ async function toggleLikeBeat(beatId) {
     likeBtn.classList.toggle('liked', beatLikes[beatId].liked);
     likeCount.textContent = beatLikes[beatId].count;
     localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
+    likeBtn.disabled = false;
 }
 
 // ========== MENU MOBILE SYSTEM ==========
@@ -2889,12 +2933,21 @@ function closeCommentModal() {
 }
 
 async function submitBeatComment() {
+    const submitBtn = document.querySelector('.submit-modal-btn');
+    if (submitBtn && submitBtn.disabled) {
+        return;
+    }
+
     const userName = document.getElementById('modalUserName').value.trim();
     const userComment = document.getElementById('modalUserComment').value.trim();
 
     if (!userName || !userComment) {
         alert('⚠️ Veuillez remplir tous les champs!');
         return;
+    }
+
+    if (submitBtn) {
+        submitBtn.disabled = true;
     }
 
     const comment = {
@@ -2934,6 +2987,10 @@ async function submitBeatComment() {
     document.getElementById('modalUserComment').value = '';
 
     alert('✅ Merci! Votre commentaire a été ajouté!');
+
+    if (submitBtn) {
+        submitBtn.disabled = false;
+    }
 }
 
 function renderBeatComments(comments) {
@@ -3274,6 +3331,77 @@ function stopAllBeats() {
     isPlayingAll = false;
 }
 
+async function downloadAllBeats() {
+    const button = document.getElementById('downloadAllBtn');
+    if (!button || button.disabled) {
+        return;
+    }
+
+    const btnText = button.querySelector('.btn-text');
+    const sourceNodes = Array.from(document.querySelectorAll('.beat-item audio source'));
+    const files = sourceNodes
+        .map(node => node.getAttribute('src'))
+        .filter(src => typeof src === 'string' && src.trim().length > 0);
+
+    if (files.length === 0) {
+        alert('⚠️ Aucun fichier à télécharger.');
+        return;
+    }
+
+    if (typeof JSZip === 'undefined') {
+        alert("⚠️ Le module ZIP n'est pas chargé. Recharge la page puis réessaie.");
+        return;
+    }
+
+    button.disabled = true;
+    button.classList.add('downloading');
+    btnText.textContent = 'Création du ZIP...';
+
+    try {
+        const zip = new JSZip();
+
+        for (let i = 0; i < files.length; i++) {
+            const fileUrl = files[i];
+            const fileName = fileUrl.split('/').pop() || `beat-${i + 1}.mp3`;
+            btnText.textContent = `Ajout ${i + 1}/${files.length}...`;
+
+            const response = await fetch(fileUrl);
+            if (!response.ok) {
+                throw new Error(`Impossible de télécharger ${fileName}`);
+            }
+
+            const blob = await response.blob();
+            zip.file(fileName, blob);
+        }
+
+        btnText.textContent = 'Finalisation...';
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(zipBlob);
+        const dateTag = new Date().toISOString().slice(0, 10);
+
+        link.href = url;
+        link.download = `dany-beats-${dateTag}.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        btnText.textContent = 'ZIP téléchargé ✅';
+        setTimeout(() => {
+            btnText.textContent = 'Télécharger Tous Les Beats';
+        }, 1800);
+    } catch (error) {
+        console.error(error);
+        alert('❌ Erreur pendant la création du ZIP. Vérifie ta connexion et réessaie.');
+        btnText.textContent = 'Télécharger Tous Les Beats';
+    } finally {
+        button.disabled = false;
+        button.classList.remove('downloading');
+    }
+}
+
 // ========== EVENT LISTENERS ==========
 window.addEventListener('DOMContentLoaded', async function() {
     await loadAllCommentCounts();
@@ -3339,7 +3467,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 </script>
-</html>
+
 <!-- Comment Modal -->
 <div class="comment-modal" id="commentModal">
     <div class="modal-content">
@@ -3348,14 +3476,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             <button class="modal-close" onclick="closeCommentModal()">✕</button>
         </div>
         <div class="modal-body">
-            <!-- Comment Form -->
             <div class="comment-form-modal">
                 <input type="text" id="modalUserName" placeholder="Votre nom *" required>
                 <textarea id="modalUserComment" placeholder="Votre commentaire... *" rows="4" required></textarea>
                 <button onclick="submitBeatComment()" class="submit-modal-btn">📤 Envoyer</button>
             </div>
-            
-            <!-- Beat Comments Display -->
             <div class="beat-comments-display">
                 <h4>💬 Commentaires:</h4>
                 <div id="beatCommentsList">
@@ -3365,7 +3490,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         </div>
     </div>
 </div>
-
-<script>
-// ... tout lòt script ou yo ...
+</body>
+</html>
 
