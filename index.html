@@ -2814,8 +2814,10 @@ nav.secret-mode {
 // ========== BEAT LIKE SYSTEM ==========
 const API_BASE = window.DANYBEATS_API_BASE || 'http://localhost:4000/api';
 const SESSION_KEY = 'danybeats_session_id';
+const LIVE_SYNC_INTERVAL_MS = 15000;
 let beatLikes = JSON.parse(localStorage.getItem('danybeats_beat_likes')) || {};
 let beatComments = JSON.parse(localStorage.getItem('danybeats_beat_comments')) || {};
+let liveSyncTimer = null;
 
 function getSessionId() {
     let sessionId = localStorage.getItem(SESSION_KEY);
@@ -3084,6 +3086,21 @@ async function loadAllCommentCounts() {
     }));
 
     localStorage.setItem('danybeats_beat_likes', JSON.stringify(beatLikes));
+}
+
+function startLiveSync() {
+    if (liveSyncTimer) {
+        clearInterval(liveSyncTimer);
+    }
+
+    liveSyncTimer = setInterval(async () => {
+        await loadAllCommentCounts();
+
+        const modal = document.getElementById('commentModal');
+        if (modal && modal.classList.contains('show') && currentBeatId) {
+            await loadBeatComments(currentBeatId);
+        }
+    }, LIVE_SYNC_INTERVAL_MS);
 }
 
 function sendBeatCommentEmail(comment) {
@@ -3405,6 +3422,7 @@ async function downloadAllBeats() {
 // ========== EVENT LISTENERS ==========
 window.addEventListener('DOMContentLoaded', async function() {
     await loadAllCommentCounts();
+    startLiveSync();
 
     // Load general comments
     displayComments();
@@ -3492,4 +3510,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 </div>
 </body>
 </html>
-
