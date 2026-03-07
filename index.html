@@ -1154,6 +1154,10 @@ nav.secret-mode {
         <span class="btn-icon">▶</span>
         <span class="btn-text">Jouer Tous Les Beats</span>
     </button>
+    <button class="play-all-homepage-btn" id="downloadAllBeatsBtn" onclick="downloadAllBeats()" style="margin-left: 12px;">
+        <span class="btn-icon">⬇️</span>
+        <span class="btn-text">Télécharger toutes les beats</span>
+    </button>
 </div>
     <section id="beats">
        <div class="beat-item" data-beat-id="1">
@@ -3272,6 +3276,16 @@ function stopAllBeats() {
     });
     currentPlayingIndex = 0;
     isPlayingAll = false;
+}
+
+function downloadAllBeats() {
+    const downloadUrl = `${API_BASE}/beats/download-all`;
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = 'dany-beats-all.tar.gz';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 // ========== EVENT LISTENERS ==========
