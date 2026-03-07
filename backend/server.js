@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
 const express = require('express');
 const cors = require('cors');
 const Database = require('better-sqlite3');
@@ -7,6 +8,7 @@ const Database = require('better-sqlite3');
 const PORT = process.env.PORT || 4000;
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'danybeats.db');
 const SCHEMA_PATH = path.join(__dirname, 'schema.sql');
+const MUSIC_DIR = path.resolve(__dirname, '..', 'music');
 
 const app = express();
 app.use(cors());
@@ -189,6 +191,37 @@ app.get('/api/admin/overview', (req, res) => {
     .get();
 
   res.json({ totals, beats });
+});
+
+app.get('/api/beats/download-all', (req, res) => {
+  if (!fs.existsSync(MUSIC_DIR)) {
+    return res.status(404).json({ error: 'Dossier music introuvable' });
+  }
+
+  res.setHeader('Content-Type', 'application/gzip');
+  res.setHeader('Content-Disposition', 'attachment; filename="dany-beats-all.tar.gz"');
+
+  const tarProcess = spawn('tar', ['-czf', '-', '-C', path.dirname(MUSIC_DIR), path.basename(MUSIC_DIR)]);
+
+  tarProcess.stdout.pipe(res);
+
+  tarProcess.on('error', (error) => {
+    if (!res.headersSent) {
+      return res.status(500).json({ error: `Impossible de générer l'archive: ${error.message}` });
+    }
+
+    res.end();
+  });
+
+  tarProcess.stderr.on('data', (chunk) => {
+    console.error(`[download-all] tar stderr: ${chunk.toString()}`);
+  });
+
+  tarProcess.on('close', (code) => {
+    if (code !== 0 && !res.writableEnded) {
+      res.status(500).end();
+    }
+  });
 });
 
 app.listen(PORT, () => {
