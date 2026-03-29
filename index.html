@@ -968,12 +968,24 @@ nav.secret-mode {
 }
 /* Comments Section */
 .comments-section {
+    position: relative;
+    overflow: hidden;
     max-width: 800px;
     margin: 60px auto 0;
     padding: 40px;
-    background: linear-gradient(135deg, rgba(255,0,128,0.05), rgba(255,140,0,0.05));
-    border-radius: 20px;
-    border: 2px solid rgba(255,0,128,0.3);
+    background: linear-gradient(135deg, rgba(255,0,128,0.16), rgba(255,140,0,0.12));
+    border-radius: 24px;
+    border: 2px solid rgba(255,0,128,0.4);
+    box-shadow: 0 0 35px rgba(255,0,128,0.18);
+}
+
+.comments-section::before {
+    content: "💖";
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.6rem;
+    opacity: 0.75;
 }
 
 .comment-form {
@@ -1023,6 +1035,13 @@ nav.secret-mode {
 .submit-comment-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 20px rgba(255,0,128,0.4);
+}
+
+.form-helper {
+    text-align: center;
+    font-size: 0.95em;
+    opacity: 0.9;
+    color: #ffd4eb;
 }
 
 .comments-display {
@@ -2732,15 +2751,16 @@ nav.secret-mode {
         </div>
        <!-- Comments Section -->
         <div class="comments-section">
-            <h3 style="color: #ff0080; text-align: center; margin-bottom: 30px;">💬 Vous en pensez quoi?</h3>
-            <p style="text-align: center; margin-bottom: 30px;">Laisse nous un commentaire pour connaitre votre avis!</p>
+            <h3 style="color: #ff0080; text-align: center; margin-bottom: 30px;">💌 Laisse un message d'amour</h3>
+            <p style="text-align: center; margin-bottom: 30px;">Écris un petit mot romantique ✨. En cliquant sur envoyer, Gmail s'ouvre avec ton message prêt à être envoyé.</p>
             
             <!-- Comment Form -->
             <div class="comment-form">
                 <input type="text" id="userName" placeholder="Votre nom *" required>
                 <input type="email" id="userEmail" placeholder="Votre email (optionnel)" >
                 <textarea id="userComment" placeholder="Ecrire votre commentaire ici... *" rows="5" required></textarea>
-                <button onclick="submitComment()" class="submit-comment-btn">📤 Envoyer un commentaire</button>
+                <button onclick="submitComment()" class="submit-comment-btn">📤 Envoyer via Gmail</button>
+                <p class="form-helper">📧 Destination: <strong>theandrique.louisjute@gmail.com</strong></p>
             </div>
 
             <!-- Comments Display -->
@@ -2760,7 +2780,7 @@ nav.secret-mode {
         <div class="contact-content">
             <p style="font-size: 1.2em; margin-bottom: 20px;">Besoin d'un beat sur mesure ? Travaillons ensemble !</p>
             <div class="contact-buttons">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=theandrique.louisjuste@gmail.com" target="_blank" class="contact-button">📧 Email</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=theandrique.louisjute@gmail.com" target="_blank" class="contact-button">📧 Email</a>
                 <a href="https://wa.me/50947462529" target="_blank" class="contact-button">💬 WhatsApp</a>
                 <a href="https://wa.me/50947462529" target="_blank" class="contact-button">💰 Acheter des Beats</a>
             </div>
@@ -3042,7 +3062,7 @@ function sendBeatCommentEmail(comment) {
         `Commentaire:\n${comment.text}`
     );
     
-    const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
+    const mailtoLink = `mailto:theandrique.louisjute@gmail.com?subject=${subject}&body=${body}`;
     
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
@@ -3143,25 +3163,24 @@ function submitComment() {
 }
 
 function sendEmailNotification(comment) {
-    const subject = encodeURIComponent('Nouveau commentaire sur Dany Beats');
+    const subject = encodeURIComponent('💌 Nouveau message depuis Dany Beats');
     const body = encodeURIComponent(
-        `Nouveau commentaire:\n\n` +
-        `Nom: ${comment.name}\n` +
-        `Email: ${comment.email || 'Non fourni'}\n` +
-        `Date: ${comment.date}\n\n` +
-        `Commentaire:\n${comment.text}`
+        `Nouveau message romantique:
+
+` +
+        `Nom: ${comment.name}
+` +
+        `Email: ${comment.email || 'Non fourni'}
+` +
+        `Date: ${comment.date}
+
+` +
+        `Message:
+${comment.text}`
     );
-    
-    const mailtoLink = `mailto:theandrique.louisjuste@gmail.com?subject=${subject}&body=${body}`;
-    
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = mailtoLink;
-    document.body.appendChild(iframe);
-    
-    setTimeout(() => {
-        document.body.removeChild(iframe);
-    }, 1000);
+
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=theandrique.louisjute@gmail.com&su=${subject}&body=${body}`;
+    window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
 }
 
 function displayComments() {
